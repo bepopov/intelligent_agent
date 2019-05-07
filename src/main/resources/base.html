@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Создание курса</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+<!-- TODO: Add there AJAX by using JavaScript to load the data from ontology -->
+<div class="container">
+    <!-- Content here -->
+    <nav class="navbar navbar-dark bg-dark">
+        <!-- Navbar content -->
+        <a class="navbar-brand" href="#">CCreator</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Создание курса<span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Все курсы</a>
+                </li>
+                <li class="nav-item">
+            </ul>
+        </div>
+    </nav>
+    <div class="row margin-top">
+        <div class="col-6">
+            <div class="card">
+                <div class="card-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-4">
+                                <label for="upload_rpd">
+                                    Загрузить РПД:
+                                </label>
+                            </div>
+                            <div class="col">
+                                <input type="file" class="form-control-file" id="upload_rpd"/>
+                            </div>
+                        </div>
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="rpd_off"/>
+                            <label for="rpd_off" class="form-check-label">
+                                Скрыть поля РПД
+                            </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="course_name">
+                                Название курса:
+                            </label>
+                            <input type="text" class="form-control" id="course_name" value="Название курса (аякс)"/>
+                        </div>
+                        <div class="form-group">
+                            Направление подготовки:
+                            <select id="institute" class="form-control">
+                                <option>Высшая школа ИТИС</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            Направление подготовки:
+                            <select id="education_direction" class="form-control">
+                                <option>Прикладная информатика</option>
+                                <option>Программная инженерия</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            Квалификация выпускника:
+                            <select id="graduate_degree" class="form-control">
+                                <option>Бакалавр</option>
+                                <option>Магистр</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            Форма обучения:
+                            <select id="education_form" class="form-control">
+                                <option>Очная</option>
+                                <option>Заочная</option>
+                            </select>
+                        </div>
+                        <!--
+                        Язык обучения:
+                        <select id="language">
+                            <option>Русский</option>
+                            <option>Английский</option>
+                        </select>
+                        -->
+                        <!--
+                        Авторы:
+                        <input type="text" id="authors" value="Авторы (мультиселект)"/>
+                        Рецензенты:
+                        <input type="text" id="reviewers" value="Рецензенты (мультиселект)"/>
+                        Цели освоения:
+                        <input type="text" id="development_goals" value="Цели освоения"/>
+                        Об авторах:
+                        <input type="text" id="about_authors" value="Об авторах"/>
+                        Место дисциплины:
+                        <input type="text" id="discipline_place" value="Место дисциплины"/>
+                        -->
+                        <div class="form-group">
+                            <label for="competences">
+                                Компетенции:
+                            </label>
+                            <input type="text" class="form-control" id="competences"
+                                   value="Компетенции (мультиселект, аякс)"/>
+                        </div>
+                        <div class="form-group">
+                            <label for="zun">
+                                Знания, умения, навыки:
+                            </label>
+                            <input type="text" class="form-control" id="zun" value="Знания, умения, навыки (аякс)"/>
+                        </div>
+                        <!--
+                        Трудоемкость:
+                        <input type="text" id="labor_intensity" value="Трудоемкость"/>
+                        -->
+                        <!--
+                        Суммарно по дисциплине можно получить 100 баллов,
+                        из них текущая работа оценивается в 50 баллов,
+                        итоговая форма контроля - в 50 баллов.
+                        Минимальное количество для допуска к зачету 28 баллов.
+                        86 баллов и более - "отлично" (отл.);
+                        71-85 баллов - "хорошо" (хор.);
+                        56-70 баллов - "удовлетворительно" (удов.);
+                        55 балла и менее - "неудовлетворительно" (неуд.).
+                        -->
+                        <div class="form-group">
+                            <label for="topics">
+                                Темы:
+                            </label>
+                            <div id="topics">
+                                <input type="text" class="topics form-control" id="topic1"
+                                       value="Тема 1. Философия в ряду других форм духовного освоения мира человеком"/>
+                                <input type="text" class="teaching_units form-control" id="unit1"
+                                       value="Мировоззрение как духовный способ освоения человеком наиболее общих взглядов на мир и место в нем. Мифология, религия, научные основания и общие результаты познания, художественно-эстетические освоения природной и социальной среды. Особенности философии как теоретического мировоззрения. Принцип рефлексии и саморефлексии стержневая основа философии. Понятие картина мира. Религиозные, научные, философские картины мира. Зарождение философии. Культурно-исторические предпосылки. Концепция генезиса философии: гносеогенная, мифогенная. Философия как всемирно-историческое явление. Философия и предфилософия (протофилософия). Философия и эпос. Философия и другие формы культуры. Предфилософские идеи в Месопотамии, Индии, Китае, Греции. Проблемы философского понимания бытия и ее всеобщих атрибутов познания мира и человека. Место человека в природе и обществе. Философия в системе культуры. Проблема культуры мышления. Философия и наука, их соотношение в различных эпохах развития общества, единство и специфические черты. Основные отрасли философского знания"/>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="educational_technologies">
+                                Образовательные технологии:
+                            </label>
+                            <select multiple class="custom-select" id="educational_technologies">
+                                <option>Дискуссия</option>
+                                <option>Семинар</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="lesson1">
+                                Урок 1:
+                            </label>
+                            <div class="form-group" id="lesson1">
+                                <select class="form-control">
+                                    <option>Тема 1</option>
+                                </select>
+                                <textarea class="form-control"></textarea>
+                                <input type="file" class="form-control-file"/>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+</html>

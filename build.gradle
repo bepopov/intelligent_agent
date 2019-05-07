@@ -1,0 +1,87 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+apply plugin: 'org.openapi.generator'
+
+group 'ru.kpfu.itis.group11501.popov'
+version '1.0-SNAPSHOT'
+sourceCompatibility = 1.8
+// TODO: Add excluding the pom files that contained in jena-sparql-api
+
+repositories {
+    mavenCentral()
+    jcenter()
+    maven {
+        url 'https://repo.spring.io/libs-snapshot'
+    }
+    maven {
+        url 'https://oss.sonatype.org/content/repositories/snapshots'
+    }
+}
+
+configurations {
+    rest
+    all {
+        exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+        exclude group: 'ch.qos.logback', module: 'logback-classic'
+    }
+}
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:2.1.3.RELEASE")
+        classpath "org.openapitools:openapi-generator-gradle-plugin:3.3.4"
+    }
+}
+
+dependencies {
+    compile("org.springframework.boot:spring-boot-starter-web")
+    compile("org.springframework.boot:spring-boot-starter-web-services")
+    compile("org.apache.cxf:cxf-spring-boot-starter-jaxws:3.3.1")
+    compile("wsdl4j:wsdl4j")
+    compile("org.projectlombok:lombok")
+    compile("io.springfox:springfox-swagger-ui:2.9.2")
+    compile("io.springfox:springfox-swagger2:2.9.2")
+    compile("org.apache.cxf:cxf-spring-boot-starter-jaxrs:3.3.1")
+    compile("org.apache.cxf:cxf-rt-rs-service-description-openapi-v3:3.3.1")
+    compile("org.springframework.boot:spring-boot-starter-log4j2")
+    compile("org.xenei:PA4RDF:1.3")
+    compile("org.aksw.jena-sparql-api:jena-sparql-api-core:3.7.0-3")
+    compile("org.aksw.jena-sparql-api:jena-sparql-api-mapper:3.7.0-3")
+    compile("ru.stachek66.nlp:mystem-scala:0.1.4")
+    compile("org.apache.jena:apache-jena-libs:3.11.0")
+}
+
+openApiGenerate {
+    generatorName = "spring"
+    inputSpec = "$projectDir/src/main/resources/intelligent_agent.yaml".toString()
+    outputDir = "$projectDir".toString()
+    apiPackage = ("ru.kpfu.itis.group11501.popov.intelligent_agent.rs.api").toString()
+    //skipOverwrite = true
+    invokerPackage = ("ru.kpfu.itis.group11501.popov.intelligent_agent.rs").toString()
+    modelPackage = ("ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model").toString()
+    modelFilesConstrainedTo = [
+            "Error"
+    ]
+    configOptions = [
+            dateLibrary: "java8"
+    ]
+    systemProperties = [
+            apis           : "",
+            models         : "",
+            supportingFiles: ""
+    ]
+}
+
+openApiValidate {
+    inputSpec = "$projectDir/src/main/resources/intelligent_agent.yaml".toString()
+}
+
+springBoot {
+    mainClassName = 'ru.kpfu.itis.group11501.popov.intelligent_agent.Server'
+}

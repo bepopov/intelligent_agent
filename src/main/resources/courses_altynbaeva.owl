@@ -1,0 +1,330 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns="http://www.kpfu.ru/admin/ontologies/2019/courses#"
+     xml:base="http://www.kpfu.ru/admin/ontologies/2019/courses"
+     xmlns:owl="http://www.w3.org/2002/07/owl#"
+     xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+     xmlns:xml="http://www.w3.org/XML/1998/namespace"
+     xmlns:xsd="http://www.w3.org/2001/XMLSchema#"
+     xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+    <owl:Ontology rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Object Properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#next_topic -->
+
+    <owl:ObjectProperty rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#next_topic">
+        <rdfs:domain rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#Topic"/>
+        <rdfs:range rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#Topic"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Data properties
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#cipher -->
+
+    <owl:DatatypeProperty rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#cipher">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdfs:domain rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#Competence"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#discipline_name -->
+
+    <owl:DatatypeProperty rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#discipline_name">
+        <rdfs:domain rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#Discipline"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#name -->
+
+    <owl:DatatypeProperty rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#name">
+        <rdfs:domain rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#Competence"/>
+        <rdfs:domain rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#Topic"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#term -->
+
+    <owl:DatatypeProperty rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#term">
+        <rdfs:domain rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#Term"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Classes
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Ability -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Ability"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Competence -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Competence"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Control_Form -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Control_Form"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Control_Form_Type -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Control_Form_Type"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Didactic_Unit -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Didactic_Unit"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Didactic_Unit_Type -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Didactic_Unit_Type"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Discipline -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Discipline"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Educational_Form -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Educational_Form"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Educational_Technology -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Educational_Technology"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Knowledge -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Knowledge"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Logistics -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Logistics"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Resource -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Resource"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Sample_Job -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Sample_Job"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Score -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Score"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Skill -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Skill"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Syllabus -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Syllabus"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Term -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Term"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Topic -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Topic"/>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#Training_Cycle -->
+
+    <owl:Class rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Training_Cycle"/>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // Individuals
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#math -->
+
+    <owl:NamedIndividual rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#math">
+        <rdf:type rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#Discipline"/>
+        <discipline_name>Mathematics</discipline_name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#math_competence -->
+
+    <owl:NamedIndividual rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#math_competence">
+        <rdf:type rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#Competence"/>
+        <cipher rdf:datatype="http://www.w3.org/2001/XMLSchema#string">МК-1</cipher>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Решать уравнения</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#math_topic1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#math_topic1">
+        <rdf:type rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#Topic"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Тема 1. Уравнения первого порядка</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#ph_topic1 -->
+
+    <owl:NamedIndividual rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#ph_topic1">
+        <rdf:type rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#Topic"/>
+        <next_topic rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#ph_topic2"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Тема 1. Философия в ряду других форм духовного освоения мира человеком.</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#ph_topic2 -->
+
+    <owl:NamedIndividual rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#ph_topic2">
+        <rdf:type rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#Topic"/>
+        <next_topic rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#ph_topic3"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Тема 2. Философия Древнего Востока</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#ph_topic3 -->
+
+    <owl:NamedIndividual rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#ph_topic3">
+        <rdf:type rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#Topic"/>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Тема 3. Античная философия</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#ph_topic4 -->
+
+    <owl:NamedIndividual rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#ph_topic4">
+        <rdf:type rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#Topic"/>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- http://www.kpfu.ru/admin/ontologies/2019/courses#philosophy_competence -->
+
+    <owl:NamedIndividual rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#philosophy_competence">
+        <rdf:type rdf:resource="http://www.kpfu.ru/admin/ontologies/2019/courses#Competence"/>
+        <cipher rdf:datatype="http://www.w3.org/2001/XMLSchema#string">ОК-1 (общекультурные компетенции)</cipher>
+        <name rdf:datatype="http://www.w3.org/2001/XMLSchema#string">способность использовать основы философских знаний для формирования мировоззренческой позиции</name>
+    </owl:NamedIndividual>
+    
+
+
+    <!-- 
+    ///////////////////////////////////////////////////////////////////////////////////////
+    //
+    // General axioms
+    //
+    ///////////////////////////////////////////////////////////////////////////////////////
+     -->
+
+    <rdf:Description>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#AllDisjointClasses"/>
+        <owl:members rdf:parseType="Collection">
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Ability"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Competence"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Control_Form"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Control_Form_Type"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Didactic_Unit"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Didactic_Unit_Type"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Discipline"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Educational_Form"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Educational_Technology"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Knowledge"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Logistics"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Resource"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Sample_Job"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Score"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Skill"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Syllabus"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Term"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Topic"/>
+            <rdf:Description rdf:about="http://www.kpfu.ru/admin/ontologies/2019/courses#Training_Cycle"/>
+        </owl:members>
+    </rdf:Description>
+</rdf:RDF>
+
+
+
+<!-- Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi -->
+

@@ -1,0 +1,252 @@
+openapi: 3.0.0
+info:
+  version: '1.0.0'
+  title: 'CCreator API'
+  description: 'API интеллектуального агента для задач анализа и формирования учебных курсов'
+  contact:
+    name: Bogdan Popov
+    email: ibogdanpopov@gmail.com
+
+servers:
+  - url: http://localhost:9000/
+    description: local server
+
+paths:
+  /courses:
+    get:
+      operationId: getAllCourses
+      description: Получить все курсы с подходящим названием
+      parameters:
+        - name: searchText
+          in: query
+          description: Текст, который должен содержаться в названии курса
+          schema:
+            type: string
+      responses:
+        200:
+          description: Курсы успешно получены
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultList[Course]'
+
+
+  /courses/{course_uuid}/topics:
+    get:
+      operationId: getAllTopics
+      description: Получить все темы существующего курса
+      parameters:
+        - name: course_uuid
+          in: path
+          description: UUID курса
+          schema:
+            type: string
+            format: uuid
+            example: 4daa9121-a1cb-416c-840a-7d793e12101f
+      responses:
+        200:
+          description: Темы курса успешно получены
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultList[Topic]'
+
+  /topics/{topic_uuid}/next:
+    get:
+      operationId: getNextTopics
+      description: Получить все темы, идущие после указанной
+      parameters:
+        - name: topic_uuid
+          in: path
+          description: UUID темы
+          schema:
+            type: string
+            format: uuid
+            example: 4daa9121-a1cb-416c-840a-7d793e12101f
+      responses:
+        200:
+          description: Похожие темы успешно получены
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultList[Topic]'
+
+  /topics:
+    get:
+      operationId: getTopics
+      description: Получить все темы, похожие на введенную. Если текст не введен, вывести все темы
+      parameters:
+        - name: searchText
+          in: query
+          description: Название темы
+          schema:
+            type: string
+      responses:
+        200:
+          description: Похожие темы успешно получены
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultList[Topic]'
+    post:
+      operationId: createTopic
+      description: Создать тему
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Topic'
+      responses:
+        200:
+          description: Тема успешно создана
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Topic'
+
+  /topics/{topic_uuid}/didactical_units:
+    get:
+      operationId: getDidacticalUnits
+      description: Получить все дидактические единицы выбранной темы
+      parameters:
+        - name: topic_uuid
+          in: path
+          description: UUID темы
+          schema:
+            type: string
+            format: uuid
+            example: 4daa9121-a1cb-416c-840a-7d793e12101f
+      responses:
+        200:
+          description: Дидактические единицы темы успешно получены
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultList[DidacticalUnit]'
+    post:
+      operationId: createDidacticalUnitForTopic
+      description: Создать дидактическую единицу для темы
+      parameters:
+        - name: topic_uuid
+          in: path
+          description: UUID темы
+          schema:
+            type: string
+            format: uuid
+            example: 4daa9121-a1cb-416c-840a-7d793e12101f
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DidacticalUnit'
+      responses:
+        200:
+          description: Дидактическая единица успешно создана
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DidacticalUnit'
+
+  /institutes/{institute_uuid}/educational_directions/{direction_uuid}/graduate_degrees/{degree_uuid}/competences:
+    get:
+      operationId: getAllCompetences
+      description: Получить все компетенции для направления подготовки
+      parameters:
+        - name: institute_uuid
+          in: path
+          description: UUID института
+          schema:
+            type: string
+            format: uuid
+            example: 4daa9121-a1cb-416c-840a-7d793e12101f
+        - name: direction_uuid
+          in: path
+          description: UUID направления подготовки
+          schema:
+            type: string
+            format: uuid
+            example: 4daa9121-a1cb-416c-840a-7d793e12101f
+        - name: degree_uuid
+          in: path
+          description: UUID квалификации выпускника
+          schema:
+            type: string
+            format: uuid
+            example: 4daa9121-a1cb-416c-840a-7d793e12101f
+            description: URI квалификации выпускника = [URI онтологии]#degree[UUID]
+      responses:
+        200:
+          description: Компетенции успешно получены
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultList[Competence]'
+
+components:
+  schemas:
+
+    ResultList[Topic]:
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Topic'
+
+    ResultList[Course]:
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Course'
+
+    ResultList[DidacticalUnit]:
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DidacticalUnit'
+
+    ResultList[Competence]:
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/Competence'
+
+    Topic:
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 4daa9121-a1cb-416c-840a-7d793e12101f
+          description: URI темы = [URI онтологии]#topic[UUID]
+        name:
+          type: string
+          example: Тема 1. Философия в ряду других форм духовного освоения мира человеком
+
+    Course:
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 4daa9121-a1cb-416c-840a-7d793e12101f
+          description: URI курса = [URI онтологии]#course[UUID]
+        name:
+          type: string
+          example: Философия
+
+    DidacticalUnit:
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 4daa9121-a1cb-416c-840a-7d793e12101f
+          description: URI дидактической единицы = [URI онтологии]#didactical_unit[UUID]
+
+    Competence:
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 4daa9121-a1cb-416c-840a-7d793e12101f
+          description: URI компетенции = [URI онтологии]#competence[UUID]
