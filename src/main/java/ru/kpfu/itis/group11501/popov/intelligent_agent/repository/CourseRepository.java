@@ -9,4 +9,6 @@ public interface CourseRepository {
     List<Course> findAll();
 
     void add(Course course);
+
+    List<Course> findAll(String searchText);
 }

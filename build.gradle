@@ -53,6 +53,9 @@ dependencies {
     compile("org.xenei:PA4RDF:1.3")
     compile("org.aksw.jena-sparql-api:jena-sparql-api-core:3.7.0-3")
     compile("org.aksw.jena-sparql-api:jena-sparql-api-mapper:3.7.0-3")
+    compile("org.aksw.jena-sparql-api:jena-sparql-api-utils:3.7.0-3")
+    compile("org.aksw.jena-sparql-api:jena-sparql-api-concepts:3.7.0-3")
+
     compile("ru.stachek66.nlp:mystem-scala:0.1.4")
     compile("org.apache.jena:apache-jena-libs:3.11.0")
 }

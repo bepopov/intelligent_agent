@@ -1,5 +1,6 @@
 package ru.kpfu.itis.group11501.popov.intelligent_agent.config;
 
+import org.aksw.jena_sparql_api.core.SparqlService;
 import org.aksw.jena_sparql_api.mapper.jpa.core.SparqlEntityManagerFactory;
 import org.aksw.jena_sparql_api.stmt.SparqlQueryParserImpl;
 import org.aksw.jena_sparql_api.update.FluentSparqlService;
@@ -13,7 +14,6 @@ import org.springframework.context.annotation.Configuration;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.Server;
 
 import javax.persistence.EntityManager;
-
 
 @Configuration
 public class JenaConfig {
@@ -41,14 +41,37 @@ public class JenaConfig {
         return model;
     }
 
+    @Bean
+    public RDFConnection connection() {
+        RDFConnection rdfConnection = RDFConnectionFuseki
+                .create()
+                .updateEndpoint(UPDATE_ENDPOINT_URL)
+                .queryEndpoint(QUERY_ENDPOINT_URL)
+                .gspEndpoint(GSP_ENDPOINT_URL)
+                .build();
+        return rdfConnection;
+    }
+
+    @Bean
+    public SparqlService sparqlService() {
+        return FluentSparqlService
+                .from(connection())
+                .config().configQuery()
+                .withParser(SparqlQueryParserImpl.create())
+                .withPagination(50000)
+                .end()
+                .end().create();
+    }
+
     /*
-    Сам фреймворк Apache Jena требует написания SPARQL-запросов (как JDBC),
+    Сам фреймворк Apache Jena требует написания SPARQL-запросов (как в JDBC),
     что не очень удобно и делает приложение менее изменяемым, поэтому была
     использована библиотека jena-sparql-api, которая реализует
     JPA-спецификацию поверх Apache Jena.
     Ссылка на Github: https://github.com/SmartDataAnalytics/jena-sparql-api
 
-    Note: в библиотеке jena-sparql-api версии 3.7.0-3 отсутствует поддержка Blank Node.
+    Note: в библиотеке jena-sparql-api версии 3.7.0-3 отсутствует поддержка Blank Node,
+    а также большинства методов CriteriaBuilder и CriteriaQuery.
 
     Здесь создается объект реализации EntityManager, который позволяет
     обращаться к OWL-онтологии с помощью SPARQL и предоставляет удобный
@@ -57,6 +80,12 @@ public class JenaConfig {
     Сами данные хранятся на сервере Apache Jena Fuseki, который необходимо
     предварительно поднять. Используйте application.properties для указания адреса
     поднятого сервера.
+
+    Reasoner должен быть включен на самом сервере Fuseki. Для включения используйте
+    конфигурационный файл ccreator.ttl. Он должен лежать в
+    apache-jena-fuseki-<version>/run/configuration.
+    Не забудьте положить файлы model.ttl и data.ttl в
+    apache-jena-fuseki-<version>/run/datasets
      */
     @Bean
     public EntityManager sparqlEntityManager() {
@@ -71,22 +100,10 @@ public class JenaConfig {
 
         emFactory.addScanPackageName(Server.class.getPackage().getName());
 
-        RDFConnection rdfConnection = RDFConnectionFuseki
-                .create()
-                .updateEndpoint(UPDATE_ENDPOINT_URL)
-                .queryEndpoint(QUERY_ENDPOINT_URL)
-                .gspEndpoint(GSP_ENDPOINT_URL)
-                .build();
+        //OntModel ontModel = ModelFactory.createOntologyModel(OWL_MEM_MICRO_RULE_INF, model);
+       // http://en.wikipedia.org/wiki/Abox
 
-        rdfConnection.load("default", jenaModel());
-
-        emFactory.setSparqlService(FluentSparqlService
-                .from(rdfConnection)
-                .config().configQuery()
-                .withParser(SparqlQueryParserImpl.create())
-                .withPagination(50000)
-                .end()
-                .end().create());
+        emFactory.setSparqlService(sparqlService());
 
         EntityManager em = null;
         try {

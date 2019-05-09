@@ -8,6 +8,6 @@ public interface CourseService {
 
     void add(Course course);
 
-    List<Course> getAll();
+    List<Course> getAll(String searchText);
 
 }

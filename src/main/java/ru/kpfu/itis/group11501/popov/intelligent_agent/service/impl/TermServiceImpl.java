@@ -2,11 +2,13 @@ package ru.kpfu.itis.group11501.popov.intelligent_agent.service.impl;
 
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Term;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Topic;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.TermRepository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.LemmatisationService;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.TermService;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.WordExtractionService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -26,7 +28,7 @@ public class TermServiceImpl implements TermService {
     }
 
     @Override
-    public void extractAndSaveTerms(String text) {
+    public List<Term> extractAndSaveTerms(String text) {
         List<String> words = extractionService.getWordsFromText(text);
         List<Term> terms = words.stream()
                 .map(word -> {
@@ -36,6 +38,7 @@ public class TermServiceImpl implements TermService {
                     return term;
                 })
                 .collect(Collectors.toList());
-        termRepository.addAll(terms);
+        //termRepository.addAll(terms);
+        return terms;
     }
 }

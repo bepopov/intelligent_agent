@@ -22,7 +22,12 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getAll() {
-        return courseRepository.findAll();
+    public List<Course> getAll(String searchText) {
+        if (searchText == null || searchText.isEmpty()) {
+            return courseRepository.findAll();
+        }
+        else {
+            return courseRepository.findAll(searchText);
+        }
     }
 }

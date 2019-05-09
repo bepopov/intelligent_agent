@@ -1,6 +1,7 @@
 package ru.kpfu.itis.group11501.popov.intelligent_agent.service.impl;
 
 import org.springframework.stereotype.Service;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Term;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Topic;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.TopicRepository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.TermService;
@@ -21,8 +22,9 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public void add(Topic topic) {
+        List<Term> terms = termService.extractAndSaveTerms(topic.getName());
+        //topic.setTerms(terms);
         topicRepository.add(topic);
-        termService.extractAndSaveTerms(topic.getName());
     }
 
     @Override

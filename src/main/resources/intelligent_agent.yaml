@@ -1,7 +1,7 @@
 openapi: 3.0.0
 info:
   version: '1.0.0'
-  title: 'CCreator API'
+  title: 'Intelligent agent API'
   description: 'API интеллектуального агента для задач анализа и формирования учебных курсов'
   contact:
     name: Bogdan Popov
