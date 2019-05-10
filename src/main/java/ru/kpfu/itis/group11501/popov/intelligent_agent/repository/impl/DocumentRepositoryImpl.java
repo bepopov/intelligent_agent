@@ -1,6 +1,9 @@
 package ru.kpfu.itis.group11501.popov.intelligent_agent.repository.impl;
 
-import org.aksw.jena_sparql_api.mapper.util.JpaUtils;
+import org.aksw.jena_sparql_api.mapper.annotation.RdfType;
+import org.apache.jena.atlas.json.JsonArray;
+import org.apache.jena.atlas.json.JsonObject;
+import org.apache.jena.atlas.json.JsonValue;
 import org.springframework.stereotype.Repository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Document;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Term;
@@ -9,9 +12,8 @@ import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.GeneralReposit
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.PojoMappingService;
 
 import javax.persistence.EntityManager;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,33 +33,27 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     }
 
     @Override
-    public <T> List<Document<T>> findAll(Class<T> entity) {
-        List<T> individuals = JpaUtils.getResultList(entityManager, entity, (cb, cr) -> {
-            Root<T> r = cr.from(entity);
-            cr.select(r);
-        });
-        return individuals.stream()
-                .map(individual -> new Document<>(individual, 0))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public <T> Long countDocument(Class<T> entity) {
-        String query = "JSON { 'subject' : ?subject, 'name' : ?name }\n" +
+    public <T> List<Document> findAllDocument(Class<T> entity) {
+        RdfType type = entity.getAnnotation(RdfType.class);
+        String query = "SELECT ?id ?text (count(?term) as ?wordCount)\n" +
                 "WHERE {\n" +
-                "\t?subject courses:discipline_name ?name .\n" +
-                //"\t?subject courses:discipline_name \"Mathematics\" \n" +
-                "}";
-        generalRepository.selectArq(query);
-
-        CriteriaBuilder qb = entityManager.getCriteriaBuilder();
-        CriteriaQuery<Long> cq = qb.createQuery(Long.class);
-        cq.select(qb.count(cq.from(entity)));
-        return entityManager.createQuery(cq).getSingleResult();
-        /*Long count = JpaUtils.getSingleResult(entityManager, Long.class, (cb, cr) ->
-                cr.select(cb.count(cr.from(entity))));
-        return count;
-         */
+                "\t?subject rdfs:label ?id .\n" +
+                "\t?subject course:contains ?term .\n" +
+                "\t?subject course:name ?text .\n" +
+                "\t?subject a " + type.value() + "\n" +
+                "}" +
+                "GROUP BY ?id ?text";
+        JsonArray result = generalRepository.selectSparql(query);
+        List<Document> documents = new ArrayList<>();
+        for (JsonValue object : result) {
+            Document document = new Document();
+            document.setEntity(entity);
+            document.setText(object.getAsObject().get("text").getAsObject().get("value").getAsString().value());
+            document.setId(object.getAsObject().get("id").getAsObject().get("value").getAsString().value());
+            document.setWordCount(Integer.valueOf(object.getAsObject().get("wordCount").getAsObject().get("value").getAsString().value()));
+            documents.add(document);
+        }
+        return documents;
     }
 
     @Override

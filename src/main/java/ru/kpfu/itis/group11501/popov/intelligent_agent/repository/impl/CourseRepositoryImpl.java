@@ -42,7 +42,7 @@ public class CourseRepositoryImpl implements CourseRepository {
     public List<Course> findAll(String searchText) {
         String select = "JSON { 'id' : ?subject, 'name' : ?name }\n" +
                 "WHERE {\n" +
-                "\t?subject courses:discipline_name ?name .\n" +
+                "\t?subject course:discipline_name ?name .\n" +
                 "\tFILTER regex (?name \""+ searchText + "*\", \"i\") \n" +
                 "}";
         String result = generalRepository.selectArq(searchText);

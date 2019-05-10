@@ -93,10 +93,10 @@ public class JenaConfig {
 
         emFactory.getPrefixMapping()
                 .setNsPrefix("course", PropertiesHolder.COURSES_ONTOLOGY)
-                .setNsPrefix("owl", "http://www.w3.org/2002/07/owl#")
-                .setNsPrefix("rdf", "http://www.w3.org/1999/02/22-rdf-syntax-ns#")
-                .setNsPrefix("schema", "http://schema.org/")
-                .setNsPrefix("rdfs", "http://www.w3.org/2000/01/rdf-schema#");
+                .setNsPrefix("owl", PropertiesHolder.OWL)
+                .setNsPrefix("rdf", PropertiesHolder.RDF)
+                .setNsPrefix("schema", PropertiesHolder.SCHEAMA)
+                .setNsPrefix("rdfs", PropertiesHolder.RDFS);
 
         emFactory.addScanPackageName(Server.class.getPackage().getName());
 

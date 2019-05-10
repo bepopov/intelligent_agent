@@ -7,9 +7,7 @@ import java.util.List;
 
 public interface DocumentRepository {
 
-    <T> List<Document<T>> findAll(Class<T> entity);
-
-    <T> Long countDocument(Class<T> entity);
+    <T> List<Document> findAllDocument(Class<T> entity);
 
     <T> void addContainsIn(Term term, Class<T> entity);
 
