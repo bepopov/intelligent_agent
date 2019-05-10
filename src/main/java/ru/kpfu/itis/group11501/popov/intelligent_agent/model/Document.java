@@ -5,12 +5,12 @@ public class Document {
     private Class entity;
     private String id;
     private String text;
-    private int wordCount;
+    private Integer wordCount;
 
     public Document() {
     }
 
-    public Document(Class entity, int wordCount, String text, String id) {
+    public Document(Class entity, Integer wordCount, String text, String id) {
         this.entity = entity;
         this.wordCount = wordCount;
         this.text = text;
@@ -25,11 +25,11 @@ public class Document {
         this.entity = entity;
     }
 
-    public int getWordCount() {
+    public Integer getWordCount() {
         return wordCount;
     }
 
-    public void setWordCount(int wordCount) {
+    public void setWordCount(Integer wordCount) {
         this.wordCount = wordCount;
     }
 

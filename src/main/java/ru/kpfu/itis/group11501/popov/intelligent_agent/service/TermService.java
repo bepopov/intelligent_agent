@@ -6,6 +6,6 @@ import java.util.List;
 
 public interface TermService {
 
-    List<Term> extractAndSaveTerms(String text);
+    <T> List<Term> extractAndSaveTerms(String text, T entity);
 
 }

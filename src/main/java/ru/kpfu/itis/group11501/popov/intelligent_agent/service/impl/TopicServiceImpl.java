@@ -22,9 +22,9 @@ public class TopicServiceImpl implements TopicService {
 
     @Override
     public void add(Topic topic) {
-        List<Term> terms = termService.extractAndSaveTerms(topic.getName());
-        //topic.setTerms(terms);
         topicRepository.add(topic);
+        List<Term> terms = termService.extractAndSaveTerms(topic.getName(), topic);
+        //topic.setTerms(terms);
     }
 
     @Override

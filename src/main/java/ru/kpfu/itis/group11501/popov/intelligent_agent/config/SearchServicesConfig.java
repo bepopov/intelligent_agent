@@ -3,6 +3,9 @@ package ru.kpfu.itis.group11501.popov.intelligent_agent.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.expression.ExpressionParser;
+import org.springframework.expression.common.TemplateParserContext;
+import org.springframework.expression.spel.standard.SpelExpressionParser;
 import ru.stachek66.nlp.mystem.holding.Factory;
 import ru.stachek66.nlp.mystem.holding.MyStem;
 import scala.Option;
@@ -40,6 +43,16 @@ public class SearchServicesConfig {
             e.printStackTrace();
         }
         return stopWords;
+    }
+
+    @Bean
+    public TemplateParserContext templateParserContext() {
+        return new TemplateParserContext();
+    }
+
+    @Bean
+    public ExpressionParser expressionParser() {
+        return new SpelExpressionParser();
     }
 
 }

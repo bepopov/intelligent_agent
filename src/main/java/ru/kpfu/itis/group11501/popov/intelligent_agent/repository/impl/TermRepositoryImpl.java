@@ -2,11 +2,7 @@ package ru.kpfu.itis.group11501.popov.intelligent_agent.repository.impl;
 
 import org.aksw.jena_sparql_api.core.SparqlService;
 import org.aksw.jena_sparql_api.core.utils.UpdateRequestUtils;
-import org.aksw.jena_sparql_api.core.utils.UpdateUtils;
 import org.aksw.jena_sparql_api.mapper.util.JpaUtils;
-import org.apache.jena.graph.Node;
-import org.apache.jena.graph.NodeFactory;
-import org.apache.jena.sparql.modify.request.UpdateCreate;
 import org.apache.jena.update.UpdateRequest;
 import org.springframework.stereotype.Repository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.config.PropertiesHolder;

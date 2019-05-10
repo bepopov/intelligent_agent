@@ -9,6 +9,6 @@ public interface DocumentRepository {
 
     <T> List<Document> findAllDocument(Class<T> entity);
 
-    <T> void addContainsIn(Term term, Class<T> entity);
+    <T> void addContainsIn(Term term, T entity);
 
 }

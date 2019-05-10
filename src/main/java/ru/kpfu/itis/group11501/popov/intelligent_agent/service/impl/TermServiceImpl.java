@@ -2,13 +2,12 @@ package ru.kpfu.itis.group11501.popov.intelligent_agent.service.impl;
 
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Term;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Topic;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.DocumentRepository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.TermRepository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.LemmatisationService;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.TermService;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.WordExtractionService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,17 +17,19 @@ public class TermServiceImpl implements TermService {
     private WordExtractionService extractionService;
     private LemmatisationService lemmatisationService;
     private TermRepository termRepository;
+    private DocumentRepository documentRepository;
 
     public TermServiceImpl(WordExtractionService extractionService,
                            LemmatisationService lemmatisationService,
-                           TermRepository termRepository) {
+                           TermRepository termRepository, DocumentRepository documentRepository) {
         this.extractionService = extractionService;
         this.lemmatisationService = lemmatisationService;
         this.termRepository = termRepository;
+        this.documentRepository = documentRepository;
     }
 
     @Override
-    public List<Term> extractAndSaveTerms(String text) {
+    public <T> List<Term> extractAndSaveTerms(String text, T entity) {
         List<String> words = extractionService.getWordsFromText(text);
         List<Term> terms = words.stream()
                 .map(word -> {
@@ -38,7 +39,8 @@ public class TermServiceImpl implements TermService {
                     return term;
                 })
                 .collect(Collectors.toList());
-        //termRepository.addAll(terms);
+        termRepository.addAll(terms);
+        terms.forEach(term -> documentRepository.addContainsIn(term, entity));
         return terms;
     }
 }
