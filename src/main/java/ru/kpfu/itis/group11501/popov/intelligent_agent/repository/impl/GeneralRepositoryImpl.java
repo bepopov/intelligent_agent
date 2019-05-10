@@ -62,6 +62,11 @@ public class GeneralRepositoryImpl implements GeneralRepository {
                 .execute();
     }
 
+    /*
+    Запросы осуществляются с помощью синтаксиса ARQ (собственный Apache
+    Jena). Внимание: агрегация в JSON-запросе не работает, используйте
+    метод selectSparql.
+     */
     @Override
     public String selectArq(String queryString) {
         queryString = addPrefix(queryString);
@@ -69,6 +74,14 @@ public class GeneralRepositoryImpl implements GeneralRepository {
         return executeSelect(query);
     }
 
+    /*
+    Этот метод служит для отправления SELECT-запроса. Маппинг происходит
+    по названию сеттеров, поэтому убедитесь, что в queryString лежат
+    соответствующие названия полей.
+    Если Document имеет поле text, то SELECT-запрос должен начинаться с:
+    SELECT ?text ...
+    TODO: Добавить маппинг для атрибутов составных типов
+     */
     @Override
     public <T> List<T> selectSparql(String queryString, Class<T> entity) {
         queryString = addPrefix(queryString);

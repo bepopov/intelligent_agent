@@ -1,17 +1,15 @@
 package ru.kpfu.itis.group11501.popov.intelligent_agent.repository.impl;
 
 import org.aksw.jena_sparql_api.mapper.annotation.RdfType;
-import org.apache.jena.atlas.json.JsonArray;
-import org.apache.jena.atlas.json.JsonValue;
 import org.springframework.stereotype.Repository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Document;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Term;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.model.TermCount;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.DocumentRepository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.GeneralRepository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.PojoMappingService;
 
 import javax.persistence.EntityManager;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -48,6 +46,11 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     @Override
     public <T> void addContainsIn(Term term, T entity) {
         generalRepository.addTriple(term, "course:containsIn", entity);
+    }
+
+    @Override
+    public <T> List<TermCount> findAllTermCount(Class<T> entity) {
+        return null;
     }
 
 }

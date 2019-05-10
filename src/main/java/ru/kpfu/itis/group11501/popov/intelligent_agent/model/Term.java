@@ -10,24 +10,7 @@ public class Term {
 
     @Iri("course:term")
     private String text;
-/*
-    @MappedBy("contains")
-    private Topic topic;
 
-    public Topic getTopic() {
-        return topic;
-    }
-
-    public void setTopic(Topic topic) {
-        this.topic = topic;
-    }
-*/
-/*
-    @MappedBy("contains")
-    @Iri("course:containsIn")
-    private List<Topic> topics;
-
-*/
     public String getText() {
         return text;
     }
@@ -36,14 +19,4 @@ public class Term {
         this.text = text;
     }
 
-    /*
-    public List<Topic> getTopics() {
-        return topics;
-    }
-
-    public void setTopics(List<Topic> topics) {
-        this.topics = topics;
-    }
-
-     */
 }

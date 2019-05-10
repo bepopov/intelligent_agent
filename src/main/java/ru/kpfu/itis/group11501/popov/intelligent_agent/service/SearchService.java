@@ -4,7 +4,7 @@ import java.util.List;
 
 public interface SearchService {
 
-    void search(List<String> searchingWords, List<String> list);
+    <T> void search(List<String> searchingWords, List<String> list, Class<T> entity);
 
     List<String> getSearchingWords(String words);
 

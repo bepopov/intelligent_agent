@@ -33,7 +33,7 @@ public class TopicController {
     @ResponseBody
     public String addTopic() {
         Topic topic = new Topic();
-        topic.setName("Новая тема по математике");
+        topic.setName("Новая новая новая");
         currentUuid = UUID.randomUUID();
         topic.setId(currentUuid.toString());
         topicService.add(topic);

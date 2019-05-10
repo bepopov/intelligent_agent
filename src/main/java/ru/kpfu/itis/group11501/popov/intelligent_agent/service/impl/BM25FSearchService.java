@@ -1,11 +1,14 @@
 package ru.kpfu.itis.group11501.popov.intelligent_agent.service.impl;
 
 import org.springframework.stereotype.Service;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Document;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.DocumentRepository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.LemmatisationService;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.SearchService;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.WordExtractionService;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Service
@@ -13,15 +16,17 @@ public class BM25FSearchService implements SearchService {
 
     private WordExtractionService extractionService;
     private LemmatisationService lemmatisationService;
+    private DocumentRepository documentRepository;
 
-    public BM25FSearchService(WordExtractionService extractionService, LemmatisationService lemmatisationService) {
+    public BM25FSearchService(WordExtractionService extractionService, LemmatisationService lemmatisationService, DocumentRepository documentRepository) {
         this.extractionService = extractionService;
         this.lemmatisationService = lemmatisationService;
+        this.documentRepository = documentRepository;
     }
 
 
     @Override
-    public void search(List<String> searchingWords, List<String> list) {
+    public <T> void search(List<String> searchingWords, List<String> list, Class<T> entity) {
         /*
         Определиться, как будет вестись поиск: по всем параметрам сразу или по-отдельности?
         Есть задача поиска похожего топика.
@@ -43,6 +48,9 @@ public class BM25FSearchService implements SearchService {
         1. в какой сущности производится поиск (Topic, DidacticalUnit, e.g.)
         2. сколько слов в документе
          */
+        Map<String, Document> documentMap = documentRepository.findAllDocument(entity)
+                .stream().collect(Collectors.toMap(Document::getId, d -> d));
+
     }
 
     @Override
