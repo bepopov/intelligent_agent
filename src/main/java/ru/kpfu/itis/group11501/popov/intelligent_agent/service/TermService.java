@@ -8,4 +8,5 @@ public interface TermService {
 
     <T> List<Term> extractAndSaveTerms(String text, T entity);
 
+    List<String> extractTerms(String text);
 }

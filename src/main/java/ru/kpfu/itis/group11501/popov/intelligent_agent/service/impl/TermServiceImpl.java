@@ -9,6 +9,7 @@ import ru.kpfu.itis.group11501.popov.intelligent_agent.service.TermService;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.WordExtractionService;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -30,17 +31,26 @@ public class TermServiceImpl implements TermService {
 
     @Override
     public <T> List<Term> extractAndSaveTerms(String text, T entity) {
-        List<String> words = extractionService.getWordsFromText(text);
-        List<Term> terms = words.stream()
+        List<Term> terms = extractTerms(text).stream()
                 .map(word -> {
-                    word = lemmatisationService.lemmatise(word);
                     Term term = new Term();
                     term.setText(word);
+                    term.setId(UUID.randomUUID().toString());
                     return term;
-                })
-                .collect(Collectors.toList());
+                }).collect(Collectors.toList());
         termRepository.addAll(terms);
         terms.forEach(term -> documentRepository.addContainsIn(term, entity));
         return terms;
+    }
+
+    @Override
+    public List<String> extractTerms(String text) {
+        List<String> words = extractionService.getWordsFromText(text);
+        return words.stream()
+                .map(word -> {
+                    word = lemmatisationService.lemmatise(word);
+                    return word;
+                })
+                .collect(Collectors.toList());
     }
 }

@@ -8,6 +8,10 @@ public class TermCount {
 
     private Integer termCount;
 
+    private Integer wordCount;
+
+    private String content;
+
     public String getTerm() {
         return term;
     }
@@ -30,5 +34,21 @@ public class TermCount {
 
     public void setTermCount(Integer termCount) {
         this.termCount = termCount;
+    }
+
+    public Integer getWordCount() {
+        return wordCount;
+    }
+
+    public void setWordCount(Integer wordCount) {
+        this.wordCount = wordCount;
+    }
+
+    public String getContent() {
+        return content;
+    }
+
+    public void setContent(String content) {
+        this.content = content;
     }
 }

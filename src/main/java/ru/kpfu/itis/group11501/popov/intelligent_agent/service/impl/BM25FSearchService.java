@@ -1,11 +1,11 @@
 package ru.kpfu.itis.group11501.popov.intelligent_agent.service.impl;
 
 import org.springframework.stereotype.Service;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Document;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.model.TermCount;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.DocumentRepository;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.service.LemmatisationService;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.TermRepository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.SearchService;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.service.WordExtractionService;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.service.TermService;
 
 import java.util.List;
 import java.util.Map;
@@ -14,19 +14,17 @@ import java.util.stream.Collectors;
 @Service
 public class BM25FSearchService implements SearchService {
 
-    private WordExtractionService extractionService;
-    private LemmatisationService lemmatisationService;
     private DocumentRepository documentRepository;
+    private TermService termService;
 
-    public BM25FSearchService(WordExtractionService extractionService, LemmatisationService lemmatisationService, DocumentRepository documentRepository) {
-        this.extractionService = extractionService;
-        this.lemmatisationService = lemmatisationService;
+    public BM25FSearchService(DocumentRepository documentRepository, TermService termService) {
         this.documentRepository = documentRepository;
+        this.termService = termService;
     }
 
 
     @Override
-    public <T> void search(List<String> searchingWords, List<String> list, Class<T> entity) {
+    public <T> void search(String text, Class<T> entity) {
         /*
         Определиться, как будет вестись поиск: по всем параметрам сразу или по-отдельности?
         Есть задача поиска похожего топика.
@@ -37,28 +35,9 @@ public class BM25FSearchService implements SearchService {
         3. Посчитать количество слов в каждом документе
         4. Посчитать среднее количество слов в каждом документе
         5. Вычислить по формуле
-
-        TermBM25Counter<T extends Document<S>> содержит информацию о том:
-        1. Map<Term, List<TermCount>>
-        TermCount содержит информацию о том:
-        1. количество вхождений Term
-        2. Document<S>
-        3. Term
-        Document<S> содержит информацию о том:
-        1. в какой сущности производится поиск (Topic, DidacticalUnit, e.g.)
-        2. сколько слов в документе
          */
-        Map<String, Document> documentMap = documentRepository.findAllDocument(entity)
-                .stream().collect(Collectors.toMap(Document::getId, d -> d));
-
+        List<String> requestWords = termService.extractTerms(text);
+        List<TermCount> termCounts = documentRepository.findTermCounts(entity, requestWords);
     }
 
-    @Override
-    public List<String> getSearchingWords(String text) {
-        List<String> requestWords = extractionService.getWordsFromText(text);
-        requestWords = requestWords.stream()
-                .map(word -> lemmatisationService.lemmatise(word))
-                .collect(Collectors.toList());
-        return requestWords;
-    }
 }

@@ -2,7 +2,6 @@ package ru.kpfu.itis.group11501.popov.intelligent_agent.repository.impl;
 
 import org.aksw.jena_sparql_api.mapper.annotation.RdfType;
 import org.springframework.stereotype.Repository;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Document;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Term;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.TermCount;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.DocumentRepository;
@@ -11,7 +10,6 @@ import ru.kpfu.itis.group11501.popov.intelligent_agent.service.PojoMappingServic
 
 import javax.persistence.EntityManager;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Repository
 public class DocumentRepositoryImpl implements DocumentRepository {
@@ -29,18 +27,27 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     }
 
     @Override
-    public <T> List<Document> findAllDocument(Class<T> entity) {
+    public <T> List<TermCount> findTermCounts(Class<T> entity, List<String> requestWords) {
         RdfType type = entity.getAnnotation(RdfType.class);
-        String query = "SELECT ?id ?text (count(?term) as ?wordcount)\n" +
+        String query = "SELECT ?docid ?content ?wordcount ?term (count(?object) as ?termcount)\n" +
                 "WHERE {\n" +
-                "\t?subject rdfs:label ?id .\n" +
-                "\t?subject course:contains ?term .\n" +
-                "\t?subject course:name ?text .\n" +
-                "\t?subject a " + type.value() + "\n" +
-                "}" +
-                "GROUP BY ?id ?text";
-        List<Document> documents = generalRepository.selectSparql(query, Document.class);
-        return documents.stream().peek(doc -> doc.setEntity(entity)).collect(Collectors.toList());
+                "  {\n" +
+                "    SELECT ?docid ?content (count(?word) as ?wordcount)\n" +
+                "                WHERE {\n" +
+                "                ?subject rdfs:label ?docid .\n" +
+                "                ?subject course:contains ?word .\n" +
+                "                ?subject course:name ?content .\n" +
+                "                ?subject a " + type.value() + "\n" +
+                "                }\n" +
+                "    GROUP BY ?docid ?content\n" +
+                "  }\n" +
+                "  ?subject rdfs:label ?docid .\n" +
+                "  ?subject course:contains ?object .\n" +
+                "  ?object course:term ?term\n" +
+                requestWordsFilter(requestWords) +
+                "}\n" +
+                "GROUP BY ?docid ?content ?wordcount ?term";
+        return generalRepository.selectSparql(query, TermCount.class);
     }
 
     @Override
@@ -48,9 +55,20 @@ public class DocumentRepositoryImpl implements DocumentRepository {
         generalRepository.addTriple(term, "course:containsIn", entity);
     }
 
-    @Override
-    public <T> List<TermCount> findAllTermCount(Class<T> entity) {
-        return null;
+    private String requestWordsFilter(List<String> requestWords) {
+        StringBuilder queryFilter = new StringBuilder();
+        if (requestWords == null || requestWords.size() == 0) {
+            return "";
+        }
+        queryFilter.append("FILTER (");
+        for (String requestWord : requestWords) {
+            queryFilter.append("(?term = \"");
+            queryFilter.append(requestWord);
+            queryFilter.append("\") || \n");
+        }
+        queryFilter.delete(queryFilter.lastIndexOf("||"), queryFilter.length() - 1);
+        queryFilter.append(")");
+        return queryFilter.toString();
     }
 
 }

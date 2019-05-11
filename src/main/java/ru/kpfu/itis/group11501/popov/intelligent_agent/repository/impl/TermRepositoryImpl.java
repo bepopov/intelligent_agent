@@ -48,7 +48,7 @@ public class TermRepositoryImpl implements TermRepository {
         String addContains = String.format(
                 "Prefix course: %s " + "Insert Data { course:%s course:%s course:%s }",
                 "<" + PropertiesHolder.COURSES_ONTOLOGY + ">",
-                "term" + term.getText(),
+                "term" + term.getId(),
                 "containsIn",
                 "topic" + topic.getId()
                 );

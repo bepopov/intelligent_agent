@@ -3,11 +3,12 @@ package ru.kpfu.itis.group11501.popov.intelligent_agent.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Document;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.model.TermCount;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Topic;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.DocumentRepository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.TopicService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -33,7 +34,7 @@ public class TopicController {
     @ResponseBody
     public String addTopic() {
         Topic topic = new Topic();
-        topic.setName("Новая новая новая");
+        topic.setName("Новая новая новая тема философия");
         currentUuid = UUID.randomUUID();
         topic.setId(currentUuid.toString());
         topicService.add(topic);
@@ -63,8 +64,11 @@ public class TopicController {
 
     @RequestMapping("/topic/count")
     @ResponseBody
-    public List<Document> count() {
-        return documentRepository.findAllDocument(Topic.class);
+    public List<TermCount> count() {
+        List<String> strings =  new ArrayList<>();
+        strings.add("ряд");
+        strings.add("новый");
+        return documentRepository.findTermCounts(Topic.class, strings);
     }
 
 }

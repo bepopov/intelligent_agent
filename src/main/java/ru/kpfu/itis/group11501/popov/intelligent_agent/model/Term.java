@@ -2,11 +2,12 @@ package ru.kpfu.itis.group11501.popov.intelligent_agent.model;
 
 import org.aksw.jena_sparql_api.mapper.annotation.*;
 
-import java.util.List;
-
 @RdfType("course:Term")
-@DefaultIri("course:term#{text}")
+@DefaultIri("course:term#{id}")
 public class Term {
+
+    @Iri("rdfs:label")
+    private String id;
 
     @Iri("course:term")
     private String text;
@@ -19,4 +20,11 @@ public class Term {
         this.text = text;
     }
 
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
 }
