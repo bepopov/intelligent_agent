@@ -84,15 +84,7 @@ public class GeneralRepositoryImpl implements GeneralRepository {
      */
     @Override
     public <T> List<T> selectSparql(String queryString, Class<T> entity) {
-        queryString = addPrefix(queryString);
-        Query query = QueryFactory.create(queryString, Syntax.syntaxSPARQL_11);
-        QueryExecution queryExecution = sparqlService.getQueryExecutionFactory().createQueryExecution(query);
-        ResultSet resultSet = queryExecution.execSelect();
-        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-        ResultSetFormatter.outputAsJSON(outputStream, resultSet);
-        String json = new String(outputStream.toByteArray());
-        JsonValue object = JSON.parseAny(json);
-        JsonArray jsonArray = object.getAsObject().get("results").getAsObject().get("bindings").getAsArray();
+        JsonArray jsonArray = selectSparql(queryString);
         try {
             List<T> instances = new ArrayList<>();
             for (JsonValue jsonValue : jsonArray) {
@@ -113,8 +105,7 @@ public class GeneralRepositoryImpl implements GeneralRepository {
                                 .allMatch(p -> p.equals(Integer.class));
                         if (isInteger) {
                             method.invoke(instance, Integer.valueOf(value));
-                        }
-                        else {
+                        } else {
                             method.invoke(instance, value);
                         }
                     }
@@ -128,9 +119,38 @@ public class GeneralRepositoryImpl implements GeneralRepository {
         return new ArrayList<>();
     }
 
+    private JsonArray selectSparql(String queryString) {
+        queryString = addPrefix(queryString);
+        Query query = QueryFactory.create(queryString, Syntax.syntaxSPARQL_11);
+        QueryExecution queryExecution = sparqlService.getQueryExecutionFactory().createQueryExecution(query);
+        ResultSet resultSet = queryExecution.execSelect();
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        ResultSetFormatter.outputAsJSON(outputStream, resultSet);
+        String json = new String(outputStream.toByteArray());
+        JsonValue object = JSON.parseAny(json);
+        return object.getAsObject().get("results").getAsObject().get("bindings").getAsArray();
+    }
+
+    private String selectParam(String queryString) {
+        JsonArray result = selectSparql(queryString);
+        return result.get(0).getAsObject().get("param").getAsObject().get("value").getAsString().value();
+    }
+
+    @Override
+    public Double selectDouble(String queryString) {
+        String result = selectParam(queryString);
+        return Double.valueOf(result);
+    }
+
+    @Override
+    public Integer selectInteger(String queryString) {
+        String result = selectParam(queryString);
+        return Integer.valueOf(result);
+    }
+
     private String addPrefix(String queryString) {
         return String.format("PREFIX %s: <%s>\n" +
-                "PREFIX %s: <%s>\n" + queryString,
+                        "PREFIX %s: <%s>\n" + queryString,
                 "course", PropertiesHolder.COURSES_ONTOLOGY,
                 "rdfs", PropertiesHolder.RDFS);
     }
@@ -141,9 +161,9 @@ public class GeneralRepositoryImpl implements GeneralRepository {
         return array.toString();
     }
 
-    public boolean isSetter(Method method){
-        if(!method.getName().startsWith("set")) return false;
-        if(method.getParameterTypes().length != 1) return false;
+    public boolean isSetter(Method method) {
+        if (!method.getName().startsWith("set")) return false;
+        if (method.getParameterTypes().length != 1) return false;
         return true;
     }
 }

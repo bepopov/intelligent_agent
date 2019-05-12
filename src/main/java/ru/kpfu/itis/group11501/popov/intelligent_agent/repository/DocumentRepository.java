@@ -11,4 +11,8 @@ public interface DocumentRepository {
 
     <T> void addContainsIn(Term term, T entity);
 
+    <T> Double averageDocLength(Class<T> entity);
+
+    <T> Integer countDocuments(Class<T> entity);
+
 }

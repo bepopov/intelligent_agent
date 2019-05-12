@@ -55,6 +55,33 @@ public class DocumentRepositoryImpl implements DocumentRepository {
         generalRepository.addTriple(term, "course:containsIn", entity);
     }
 
+    @Override
+    public <T> Double averageDocLength(Class<T> entity) {
+        RdfType type = entity.getAnnotation(RdfType.class);
+        String query = "SELECT (AVG(?wordcount) AS ?param)\n" +
+                "WHERE {\n" +
+                "  {\n" +
+                "    SELECT (count(?word) as ?wordcount)\n" +
+                "                WHERE {\n" +
+                "                ?doc course:contains ?word .\n" +
+                "                ?doc a " + type.value() + "\n" +
+                "                }\n" +
+                "    GROUP BY ?doc\n" +
+                "  }\n" +
+                "}";
+        return generalRepository.selectDouble(query);
+    }
+
+    @Override
+    public <T> Integer countDocuments(Class<T> entity) {
+        RdfType type = entity.getAnnotation(RdfType.class);
+        String query = "SELECT (count(?doc) as ?param)\n" +
+                "       WHERE {\n" +
+                "                ?doc a " + type.value() + "\n" +
+                "       }";
+        return generalRepository.selectInteger(query);
+    }
+
     private String requestWordsFilter(List<String> requestWords) {
         StringBuilder queryFilter = new StringBuilder();
         if (requestWords == null || requestWords.size() == 0) {

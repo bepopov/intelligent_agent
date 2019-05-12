@@ -15,4 +15,8 @@ public interface GeneralRepository {
 
     <T> List<T> selectSparql(String queryString, Class<T> entity);
 
+    Double selectDouble(String queryString);
+
+    Integer selectInteger(String queryString);
+
 }
