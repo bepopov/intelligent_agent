@@ -3,9 +3,9 @@ package ru.kpfu.itis.group11501.popov.intelligent_agent.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.model.TermCount;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Document;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Topic;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.DocumentRepository;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.service.SearchService;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.TopicService;
 
 import java.util.ArrayList;
@@ -16,11 +16,11 @@ import java.util.UUID;
 public class TopicController {
 
     private TopicService topicService;
-    private DocumentRepository documentRepository;
+    private SearchService searchService;
 
-    public TopicController(TopicService topicService, DocumentRepository documentRepository) {
+    public TopicController(TopicService topicService, SearchService searchService) {
         this.topicService = topicService;
-        this.documentRepository = documentRepository;
+        this.searchService = searchService;
     }
 
     @RequestMapping("/topics")
@@ -64,11 +64,11 @@ public class TopicController {
 
     @RequestMapping("/topic/count")
     @ResponseBody
-    public List<TermCount> count() {
+    public List<Document> count() {
         List<String> strings =  new ArrayList<>();
         strings.add("ряд");
         strings.add("новый");
-        return documentRepository.findTermCounts(Topic.class, strings);
+        return searchService.search("новая тема по философии", Topic.class);
     }
 
 }

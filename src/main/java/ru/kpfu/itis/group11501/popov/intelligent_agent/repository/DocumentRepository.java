@@ -1,5 +1,6 @@
 package ru.kpfu.itis.group11501.popov.intelligent_agent.repository;
 
+import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Document;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Term;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.TermCount;
 
@@ -14,5 +15,7 @@ public interface DocumentRepository {
     <T> Double averageDocLength(Class<T> entity);
 
     <T> Integer countDocuments(Class<T> entity);
+
+    <T> List<Document> findDocuments(Class<T> entity, List<String> requestWords);
 
 }
