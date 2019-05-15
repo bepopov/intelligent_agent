@@ -150,9 +150,13 @@ public class GeneralRepositoryImpl implements GeneralRepository {
 
     private String addPrefix(String queryString) {
         return String.format("PREFIX %s: <%s>\n" +
+                        "PREFIX %s: <%s>\n" +
+                        "PREFIX %s: <%s>\n" +
                         "PREFIX %s: <%s>\n" + queryString,
                 "course", PropertiesHolder.COURSES_ONTOLOGY,
-                "rdfs", PropertiesHolder.RDFS);
+                "rdfs", PropertiesHolder.RDFS,
+                "owllist", PropertiesHolder.LIST_SCHEMA,
+                "listdata", PropertiesHolder.LIST_DATA);
     }
 
     private String executeSelect(Query query) {

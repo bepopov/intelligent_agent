@@ -3,12 +3,14 @@ package ru.kpfu.itis.group11501.popov.intelligent_agent.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Document;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.model.EmptyList;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.model.OWLList;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.model.OWLListImpl;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Topic;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.OWLListRepository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.SearchService;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.TopicService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,10 +19,12 @@ public class TopicController {
 
     private TopicService topicService;
     private SearchService searchService;
+    private OWLListRepository owlListRepository;
 
-    public TopicController(TopicService topicService, SearchService searchService) {
+    public TopicController(TopicService topicService, SearchService searchService, OWLListRepository owlListRepository) {
         this.topicService = topicService;
         this.searchService = searchService;
+        this.owlListRepository = owlListRepository;
     }
 
     @RequestMapping("/topics")
@@ -64,11 +68,10 @@ public class TopicController {
 
     @RequestMapping("/topic/count")
     @ResponseBody
-    public List<Document> count() {
-        List<String> strings =  new ArrayList<>();
-        strings.add("ряд");
-        strings.add("новый");
-        return searchService.search("новая тема по философии", Topic.class);
+    public OWLList<Topic> count() {
+        List<Topic> topics = topicService.getAll();
+        OWLList<Topic> topicOWLList = owlListRepository.add(topics);
+        return topicOWLList;
     }
 
 }

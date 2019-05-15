@@ -20,8 +20,10 @@ public class JenaConfig {
 
     // https://jena.apache.org/documentation/inference/
 
-    private final String DATA_FILE =
-            PropertiesHolder.getProperties().getProperty("jena.owl.file");
+    private final String COURSE_DATA_FILE =
+            PropertiesHolder.getProperties().getProperty("jena.owl.course.file");
+    private final String LISTS_DATA_FILE =
+            PropertiesHolder.getProperties().getProperty("jena.owl.lists.file");
     private final String SPARQL_DB_URL =
             PropertiesHolder.getProperties().getProperty("sparql.db.url");
     private final String UPDATE_ENDPOINT_URL =
@@ -35,9 +37,16 @@ public class JenaConfig {
                     PropertiesHolder.getProperties().getProperty("gsp.endpoint.path");
 
     @Bean
-    public Model jenaModel() {
+    public Model courseModel() {
         Model model = ModelFactory.createDefaultModel();
-        FileManager.get().readModel(model, DATA_FILE);
+        FileManager.get().readModel(model, COURSE_DATA_FILE);
+        return model;
+    }
+
+    @Bean
+    public Model listsModel() {
+        Model model = ModelFactory.createDefaultModel();
+        FileManager.get().readModel(model, LISTS_DATA_FILE);
         return model;
     }
 
@@ -49,6 +58,8 @@ public class JenaConfig {
                 .queryEndpoint(QUERY_ENDPOINT_URL)
                 .gspEndpoint(GSP_ENDPOINT_URL)
                 .build();
+        rdfConnection.load("default", courseModel());
+        rdfConnection.load("default", listsModel());
         return rdfConnection;
     }
 
@@ -96,7 +107,9 @@ public class JenaConfig {
                 .setNsPrefix("owl", PropertiesHolder.OWL)
                 .setNsPrefix("rdf", PropertiesHolder.RDF)
                 .setNsPrefix("schema", PropertiesHolder.SCHEAMA)
-                .setNsPrefix("rdfs", PropertiesHolder.RDFS);
+                .setNsPrefix("rdfs", PropertiesHolder.RDFS)
+                .setNsPrefix("owllist", PropertiesHolder.LIST_SCHEMA)
+                .setNsPrefix("listdata", PropertiesHolder.LIST_DATA);
 
         emFactory.addScanPackageName(Server.class.getPackage().getName());
 

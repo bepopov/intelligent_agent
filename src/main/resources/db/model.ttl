@@ -1,0 +1,340 @@
+@prefix : <http://www.kpfu.ru/admin/ontologies/2019/courses#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix xml: <http://www.w3.org/XML/1998/namespace> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@base <http://www.kpfu.ru/admin/ontologies/2019/courses> .
+
+<http://www.kpfu.ru/admin/ontologies/2019/courses> rdf:type owl:Ontology .
+
+#################################################################
+#    Object Properties
+#################################################################
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#contains
+:contains rdf:type owl:ObjectProperty ;
+          owl:inverseOf :containsIn .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#containsIn
+:containsIn rdf:type owl:ObjectProperty ;
+            rdfs:domain :Term ;
+            rdfs:range :Topic .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#next_topic
+:next_topic rdf:type owl:ObjectProperty ;
+            rdfs:domain :Topic ;
+            rdfs:range :Topic .
+
+
+#################################################################
+#    Data properties
+#################################################################
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#cipher
+:cipher rdf:type owl:DatatypeProperty ,
+                 owl:FunctionalProperty ;
+        rdfs:domain :Competence ;
+        rdfs:range xsd:string .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#discipline_name
+:discipline_name rdf:type owl:DatatypeProperty ;
+                 rdfs:domain :Discipline ;
+                 rdfs:range xsd:string .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#name
+:name rdf:type owl:DatatypeProperty ;
+      rdfs:domain :Topic ;
+      rdfs:range xsd:string .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#term
+:term rdf:type owl:DatatypeProperty ;
+      rdfs:domain :Term ;
+      rdfs:range xsd:string .
+
+
+#################################################################
+#    Classes
+#################################################################
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Ability
+:Ability rdf:type owl:Class ;
+         owl:disjointWith :Competence ,
+                          :Control_Form ,
+                          :Control_Form_Type ,
+                          :Didactic_Unit ,
+                          :Didactic_Unit_Type ,
+                          :Discipline ,
+                          :Educational_Form ,
+                          :Educational_Technology ,
+                          :Knowledge ,
+                          :Logistics ,
+                          :Resource ,
+                          :Sample_Job ,
+                          :Score ,
+                          :Skill ,
+                          :Syllabus ,
+                          :Term ,
+                          :Topic ,
+                          :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Competence
+:Competence rdf:type owl:Class ;
+            owl:disjointWith :Control_Form ,
+                             :Control_Form_Type ,
+                             :Didactic_Unit ,
+                             :Didactic_Unit_Type ,
+                             :Discipline ,
+                             :Educational_Form ,
+                             :Educational_Technology ,
+                             :Knowledge ,
+                             :Logistics ,
+                             :Resource ,
+                             :Sample_Job ,
+                             :Score ,
+                             :Skill ,
+                             :Syllabus ,
+                             :Term ,
+                             :Topic ,
+                             :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Control_Form
+:Control_Form rdf:type owl:Class ;
+              owl:disjointWith :Control_Form_Type ,
+                               :Didactic_Unit ,
+                               :Didactic_Unit_Type ,
+                               :Discipline ,
+                               :Educational_Form ,
+                               :Educational_Technology ,
+                               :Knowledge ,
+                               :Logistics ,
+                               :Resource ,
+                               :Sample_Job ,
+                               :Score ,
+                               :Skill ,
+                               :Syllabus ,
+                               :Term ,
+                               :Topic ,
+                               :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Control_Form_Type
+:Control_Form_Type rdf:type owl:Class ;
+                   owl:disjointWith :Didactic_Unit ,
+                                    :Didactic_Unit_Type ,
+                                    :Discipline ,
+                                    :Educational_Form ,
+                                    :Educational_Technology ,
+                                    :Knowledge ,
+                                    :Logistics ,
+                                    :Resource ,
+                                    :Sample_Job ,
+                                    :Score ,
+                                    :Skill ,
+                                    :Syllabus ,
+                                    :Term ,
+                                    :Topic ,
+                                    :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Didactic_Unit
+:Didactic_Unit rdf:type owl:Class ;
+               owl:disjointWith :Didactic_Unit_Type ,
+                                :Discipline ,
+                                :Educational_Form ,
+                                :Educational_Technology ,
+                                :Knowledge ,
+                                :Logistics ,
+                                :Resource ,
+                                :Sample_Job ,
+                                :Score ,
+                                :Skill ,
+                                :Syllabus ,
+                                :Term ,
+                                :Topic ,
+                                :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Didactic_Unit_Type
+:Didactic_Unit_Type rdf:type owl:Class ;
+                    owl:disjointWith :Discipline ,
+                                     :Educational_Form ,
+                                     :Educational_Technology ,
+                                     :Knowledge ,
+                                     :Logistics ,
+                                     :Resource ,
+                                     :Sample_Job ,
+                                     :Score ,
+                                     :Skill ,
+                                     :Syllabus ,
+                                     :Term ,
+                                     :Topic ,
+                                     :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Discipline
+:Discipline rdf:type owl:Class ;
+            owl:disjointWith :Educational_Form ,
+                             :Educational_Technology ,
+                             :Knowledge ,
+                             :Logistics ,
+                             :Resource ,
+                             :Sample_Job ,
+                             :Score ,
+                             :Skill ,
+                             :Syllabus ,
+                             :Term ,
+                             :Topic ,
+                             :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Educational_Form
+:Educational_Form rdf:type owl:Class ;
+                  owl:disjointWith :Educational_Technology ,
+                                   :Knowledge ,
+                                   :Logistics ,
+                                   :Resource ,
+                                   :Sample_Job ,
+                                   :Score ,
+                                   :Skill ,
+                                   :Syllabus ,
+                                   :Term ,
+                                   :Topic ,
+                                   :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Educational_Technology
+:Educational_Technology rdf:type owl:Class ;
+                        owl:disjointWith :Knowledge ,
+                                         :Logistics ,
+                                         :Resource ,
+                                         :Sample_Job ,
+                                         :Score ,
+                                         :Skill ,
+                                         :Syllabus ,
+                                         :Term ,
+                                         :Topic ,
+                                         :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Knowledge
+:Knowledge rdf:type owl:Class ;
+           owl:disjointWith :Logistics ,
+                            :Resource ,
+                            :Sample_Job ,
+                            :Score ,
+                            :Skill ,
+                            :Syllabus ,
+                            :Term ,
+                            :Topic ,
+                            :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Logistics
+:Logistics rdf:type owl:Class ;
+           owl:disjointWith :Resource ,
+                            :Sample_Job ,
+                            :Score ,
+                            :Skill ,
+                            :Syllabus ,
+                            :Term ,
+                            :Topic ,
+                            :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Resource
+:Resource rdf:type owl:Class ;
+          owl:disjointWith :Sample_Job ,
+                           :Score ,
+                           :Skill ,
+                           :Syllabus ,
+                           :Term ,
+                           :Topic ,
+                           :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Sample_Job
+:Sample_Job rdf:type owl:Class ;
+            owl:disjointWith :Score ,
+                             :Skill ,
+                             :Syllabus ,
+                             :Term ,
+                             :Topic ,
+                             :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Score
+:Score rdf:type owl:Class ;
+       owl:disjointWith :Skill ,
+                        :Syllabus ,
+                        :Term ,
+                        :Topic ,
+                        :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Skill
+:Skill rdf:type owl:Class ;
+       owl:disjointWith :Syllabus ,
+                        :Term ,
+                        :Topic ,
+                        :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Syllabus
+:Syllabus rdf:type owl:Class ;
+          owl:disjointWith :Term ,
+                           :Topic ,
+                           :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Term
+:Term rdf:type owl:Class ;
+      owl:disjointWith :Topic ,
+                       :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Topic
+:Topic rdf:type owl:Class ;
+       owl:disjointWith :Training_Cycle .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Training_Cycle
+:Training_Cycle rdf:type owl:Class .
+
+
+#################################################################
+#    General axioms
+#################################################################
+
+[ rdf:type owl:AllDisjointClasses ;
+  owl:members ( :Ability
+                :Competence
+                :Control_Form
+                :Control_Form_Type
+                :Didactic_Unit
+                :Didactic_Unit_Type
+                :Discipline
+                :Educational_Form
+                :Educational_Technology
+                :Knowledge
+                :Logistics
+                :Resource
+                :Sample_Job
+                :Score
+                :Skill
+                :Syllabus
+                :Term
+                :Topic
+                :Training_Cycle
+              )
+] .
+
+
+###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi
