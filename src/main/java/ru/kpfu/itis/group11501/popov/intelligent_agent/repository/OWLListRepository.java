@@ -6,8 +6,6 @@ import java.util.List;
 
 public interface OWLListRepository {
 
-    <T> OWLList<T> add(List<T> elements);
-
-    <T> void getOWLList();
+    <T> OWLList add(List<T> elements);
 
 }

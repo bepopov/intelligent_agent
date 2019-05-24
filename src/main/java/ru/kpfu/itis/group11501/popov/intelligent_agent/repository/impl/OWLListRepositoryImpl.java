@@ -1,7 +1,6 @@
 package ru.kpfu.itis.group11501.popov.intelligent_agent.repository.impl;
 
-import org.aksw.jena_sparql_api.mapper.annotation.DefaultIri;
-import org.springframework.expression.Expression;
+import com.google.common.collect.Lists;
 import org.springframework.expression.ExpressionParser;
 import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.stereotype.Repository;
@@ -34,41 +33,19 @@ public class OWLListRepositoryImpl implements OWLListRepository {
     Добавить тройки для OWLList: hasNext, hasContents
      */
     @Override
-    public <T> OWLList<T> add(List<T> elements) {
-        OWLList<T> topicOWLList = new EmptyList<>();
+    public <T> OWLList add(List<T> elements) {
+        elements = Lists.reverse(elements);
+        OWLList topicOWLList = new EmptyList();
         entityManager.merge(topicOWLList);
         for (T element : elements) {
-            OWLList<T> elem = new OWLListImpl<>();
+            OWLList elem = new OWLListImpl();
             elem.setId(UUID.randomUUID().toString());
             entityManager.merge(elem);
             generalRepository.addTriple(elem, "owllist:hasNext", topicOWLList);
             generalRepository.addTriple(elem, "owllist:hasContents", element);
             topicOWLList = elem;
         }
-
-/*
-        T first = elements.get(0);
-        if (first != null) {
-            DefaultIri iri = first.getClass().getAnnotation(DefaultIri.class);
-            String iriString = iri.value();
-            for (T element : elements) {
-                OWLList<T> elem = new OWLListImpl<>();
-                elem.setElement(element);
-                elem.setId(UUID.randomUUID().toString());
-                elem.setTail(topicOWLList);
-                Expression elemExpression = expressionParser.parseExpression(iriString, parserContext);
-                String idElem = (String) elemExpression.getValue(element);
-                elem.setElemIri(idElem);
-                topicOWLList = elem;
-                entityManager.merge(elem);
-            }
-
- */
         return topicOWLList;
     }
 
-    @Override
-    public <T> void getOWLList() {
-
-    }
 }

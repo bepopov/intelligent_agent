@@ -9,7 +9,7 @@ public interface GeneralRepository {
     (у object и subject должны присутствовать все
     поля, участвующие в создании URI)
     */
-    <T, E> void addTriple(T object, String predicate, E subject);
+    <T, E> void addTriple(T subject, String predicate, E object);
 
     String selectArq(String queryString);
 

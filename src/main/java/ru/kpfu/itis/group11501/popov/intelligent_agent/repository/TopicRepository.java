@@ -11,4 +11,7 @@ public interface TopicRepository {
     List<Topic> findAll();
 
     void remove(Topic topic);
+
+    List<Topic> findNextTopics(String id);
+
 }

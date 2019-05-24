@@ -11,6 +11,7 @@ import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.OWLListReposit
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.SearchService;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.TopicService;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -37,21 +38,20 @@ public class TopicController {
     @RequestMapping("/topics/add")
     @ResponseBody
     public String addTopic() {
-        Topic topic = new Topic();
-        topic.setName("Новая новая новая тема философия");
-        currentUuid = UUID.randomUUID();
-        topic.setId(currentUuid.toString());
-        topicService.add(topic);
-        Topic topic2 = new Topic();
-        topic2.setName("Тема 1. Философия в ряду других форм духовного освоения мира человеком");
-        currentUuid = UUID.randomUUID();
-        topic2.setId(currentUuid.toString());
-        topicService.add(topic2);
-        Topic topic3 = new Topic();
-        topic3.setName("Данная учебная дисциплина включена в раздел \" Б1.Б.1 Дисциплины (модули)\" основной образовательной программы 09.03.03 Прикладная информатика и относится к базовой (общепрофессиональной) части. Осваивается на 2 курсе, 4 семестр");
-        currentUuid = UUID.randomUUID();
-        topic3.setId(currentUuid.toString());
-        topicService.add(topic3);
+
+        String [] strings = new String[] {
+                "А", "Б", "В", "Г", "Д", "Е"
+        };
+        List<Topic> topics = new ArrayList<>();
+        for (String string : strings) {
+            Topic topic = new Topic();
+            topic.setName(string);
+            currentUuid = UUID.randomUUID();
+            topic.setId(currentUuid.toString());
+            topicService.add(topic);
+            topics.add(topic);
+        }
+        owlListRepository.add(topics);
         return "Тема успешно добавлена";
     }
 
@@ -68,10 +68,8 @@ public class TopicController {
 
     @RequestMapping("/topic/count")
     @ResponseBody
-    public OWLList<Topic> count() {
-        List<Topic> topics = topicService.getAll();
-        OWLList<Topic> topicOWLList = owlListRepository.add(topics);
-        return topicOWLList;
+    public Integer count() {
+        return 1;
     }
 
 }

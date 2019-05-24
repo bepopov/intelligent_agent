@@ -4,6 +4,6 @@ import java.util.List;
 
 public interface WordExtractionService {
 
-    List<String> getWordsFromText(String searchText);
+    List<String> getWordsFromText(String text);
 
 }

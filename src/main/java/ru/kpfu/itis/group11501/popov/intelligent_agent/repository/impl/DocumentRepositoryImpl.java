@@ -7,24 +7,16 @@ import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Term;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.TermCount;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.DocumentRepository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.GeneralRepository;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.service.PojoMappingService;
 
-import javax.persistence.EntityManager;
 import java.util.List;
 
 @Repository
 public class DocumentRepositoryImpl implements DocumentRepository {
 
-    private EntityManager entityManager;
     private GeneralRepository generalRepository;
-    private PojoMappingService mappingService;
 
-    public DocumentRepositoryImpl(EntityManager entityManager,
-                                  GeneralRepository generalRepository,
-                                  PojoMappingService mappingService) {
-        this.entityManager = entityManager;
+    public DocumentRepositoryImpl(GeneralRepository generalRepository) {
         this.generalRepository = generalRepository;
-        this.mappingService = mappingService;
     }
 
     @Override
