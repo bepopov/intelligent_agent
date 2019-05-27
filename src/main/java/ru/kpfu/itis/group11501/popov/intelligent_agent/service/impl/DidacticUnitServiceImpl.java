@@ -64,6 +64,16 @@ public class DidacticUnitServiceImpl implements DidacticUnitService {
         didacticUnitRepository.add(didacticUnit);
     }
 
+    @Override
+    public List<DidacticUnitGroup> getNext(String id) {
+        List<DidacticUnitGroup> groups = didacticUnitGroupRepository.findNext(id);
+        groups = groups.stream().peek(g -> {
+            List<DidacticUnit> units = didacticUnitRepository.findByGroup(g.getId());
+            g.setDidacticUnits(units);
+        }).collect(Collectors.toList());
+        return groups;
+    }
+
     private void createNewDidacticUnit(DidacticUnitGroup didacticUnitGroup) {
         didacticUnitGroup.setId(UUID.randomUUID().toString());
         didacticUnitGroupRepository.add(didacticUnitGroup);

@@ -6,6 +6,7 @@ import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.DidacticUnitGr
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.GeneralRepository;
 
 import javax.persistence.EntityManager;
+import java.util.List;
 
 @Repository
 public class DidacticUnitGroupRepositoryImpl implements DidacticUnitGroupRepository {
@@ -21,5 +22,18 @@ public class DidacticUnitGroupRepositoryImpl implements DidacticUnitGroupReposit
     @Override
     public void add(DidacticUnitGroup didacticUnitGroup) {
         entityManager.merge(didacticUnitGroup);
+    }
+
+    @Override
+    public List<DidacticUnitGroup> findNext(String id) {
+        String queryString =
+                "SELECT ?id WHERE {\n" +
+                        "  ?sub owllist:hasNext+ ?obj .\n" +
+                        "  ?sub owllist:hasContents ?element .\n" +
+                        "  ?element rdfs:label ?element_id .\n" +
+                        "  ?obj owllist:hasContents/rdfs:label ?id\n" +
+                        "  FILTER (?element_id = \"" + id + "\")\n" +
+                        "}";
+        return generalRepository.selectSparql(queryString, DidacticUnitGroup.class);
     }
 }

@@ -14,4 +14,6 @@ public interface DidacticUnitService {
 
     void add(DidacticUnit didacticUnit);
 
+    List<DidacticUnitGroup> getNext(String id);
+
 }
