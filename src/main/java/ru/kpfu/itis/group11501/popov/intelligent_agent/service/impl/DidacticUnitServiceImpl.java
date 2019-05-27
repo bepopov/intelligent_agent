@@ -71,6 +71,6 @@ public class DidacticUnitServiceImpl implements DidacticUnitService {
         String text = didacticUnits.stream()
                 .map(du -> du.getName() + " ")
                 .collect(Collectors.joining());
-        termService.extractAndSaveTerms(text, DidacticUnitGroup.class);
+        termService.extractAndSaveTerms(text, didacticUnitGroup);
     }
 }

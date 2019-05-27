@@ -18,4 +18,8 @@ public interface DocumentRepository {
 
     <T> List<Document> findDocuments(Class<T> entity, List<String> requestWords);
 
+    <T, E> List<Document> findGroupedDocuments(Class<T> entity, Class<E> group, List<String> requestWords);
+
+    <T, E> List<TermCount> findGroupedTermCounts(Class<T> entity, Class<E> group, List<String> requestWords);
+
 }

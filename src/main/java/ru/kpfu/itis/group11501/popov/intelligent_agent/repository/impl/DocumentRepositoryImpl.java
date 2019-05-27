@@ -92,6 +92,54 @@ public class DocumentRepositoryImpl implements DocumentRepository {
         return generalRepository.selectSparql(query, Document.class);
     }
 
+    @Override
+    public <T, E> List<Document> findGroupedDocuments(Class<T> entity, Class<E> group, List<String> requestWords) {
+        RdfType typeGroup = group.getAnnotation(RdfType.class);
+        RdfType typeEntity = entity.getAnnotation(RdfType.class);
+        String query =
+                "SELECT ?id ?wordcount ?content\n" +
+                        "WHERE {\n" +
+                        "  {\n" +
+                        "    SELECT ?groupid (count(?word) as ?wordcount)\n" +
+                        "    WHERE {\n" +
+                        "      ?subject rdfs:label ?groupid .\n" +
+                        "      ?subject course:contains ?word .\n" +
+                        "      ?subject a " + typeGroup.value() + "\n" +
+                        "    }\n" +
+                        "    GROUP BY ?groupid ?wordcount\n" +
+                        "  }\n" +
+                        "  ?subject rdfs:label ?id .\n" +
+                        "  ?subject course:groupedTo ?group .\n" +
+                        "  ?group rdfs:label ?groupid .\n" +
+                        "  ?group course:contains ?object .\n" +
+                        "  ?object course:term ?term .\n" +
+                        "  ?subject a " + typeEntity.value() + " .\n" +
+                        "  ?subject course:name ?content\n" +
+                        requestWordsFilter(requestWords) +
+                        "}\n" +
+                        "GROUP BY ?id ?wordcount ?content";
+        return generalRepository.selectSparql(query, Document.class);
+    }
+
+    @Override
+    public <T, E> List<TermCount> findGroupedTermCounts(Class<T> entity, Class<E> group, List<String> requestWords) {
+        RdfType typeEntity = entity.getAnnotation(RdfType.class);
+        RdfType typeGroup = entity.getAnnotation(RdfType.class);
+        String query =
+                "SELECT ?docid ?term (count(?term) as ?termcount)\n" +
+                        "WHERE {\n" +
+                        "  ?subject rdfs:label ?docid .\n" +
+                        "  ?subject a " + typeEntity.value() + " .\n" +
+                        "  ?subject course:groupedTo ?group .\n" +
+                        "  ?group a " + typeGroup.value() + " .\n" +
+                        "  ?group course:contains ?object .\n" +
+                        "  ?object course:term ?term .\n" +
+                        requestWordsFilter(requestWords) +
+                        "}\n" +
+                        "GROUP BY ?docid ?term ?termcount";
+        return generalRepository.selectSparql(query, TermCount.class);
+    }
+
     private String requestWordsFilter(List<String> requestWords) {
         StringBuilder queryFilter = new StringBuilder();
         if (requestWords == null || requestWords.size() == 0) {

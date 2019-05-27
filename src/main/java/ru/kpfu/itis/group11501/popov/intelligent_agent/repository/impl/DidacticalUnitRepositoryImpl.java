@@ -1,11 +1,13 @@
 package ru.kpfu.itis.group11501.popov.intelligent_agent.repository.impl;
 
+import org.springframework.stereotype.Repository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.DidacticUnit;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.DidacticUnitRepository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.GeneralRepository;
 
 import javax.persistence.EntityManager;
 
+@Repository
 public class DidacticalUnitRepositoryImpl implements DidacticUnitRepository {
 
     private EntityManager entityManager;

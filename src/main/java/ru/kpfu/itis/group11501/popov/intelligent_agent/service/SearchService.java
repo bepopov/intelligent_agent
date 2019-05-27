@@ -8,4 +8,6 @@ public interface SearchService {
 
     <T> List<Document> search(String text, Class<T> entity);
 
+    <T, E> List<Document> searchGrouped(String text, Class<T> entity, Class<E> group);
+
 }

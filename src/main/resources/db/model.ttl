@@ -6,7 +6,16 @@
 @prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
 @base <http://www.kpfu.ru/admin/ontologies/2019/courses> .
 
-<http://www.kpfu.ru/admin/ontologies/2019/courses> rdf:type owl:Ontology .
+<http://www.kpfu.ru/admin/ontologies/2019/courses> rdf:type owl:Ontology ;
+                                                    owl:imports <http://www.co-ode.org/ontologies/lists/2008/09/11/list.owl> .
+
+#################################################################
+#    Annotation properties
+#################################################################
+
+###  http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled
+<http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> rdf:type owl:AnnotationProperty .
+
 
 #################################################################
 #    Object Properties
@@ -14,19 +23,56 @@
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#contains
 :contains rdf:type owl:ObjectProperty ;
-          owl:inverseOf :containsIn .
+          owl:inverseOf :containsIn ;
+          rdfs:comment "Наличие предиката означает, что сущность содержит в себе термин"^^xsd:string .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#containsIn
 :containsIn rdf:type owl:ObjectProperty ;
             rdfs:domain :Term ;
-            rdfs:range :Topic .
+            rdfs:comment "Наличие предиката означает наличие термина в объекте"^^xsd:string .
 
 
-###  http://www.kpfu.ru/admin/ontologies/2019/courses#next_topic
-:next_topic rdf:type owl:ObjectProperty ;
-            rdfs:domain :Topic ;
-            rdfs:range :Topic .
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#didacticUnits
+:didacticUnits rdf:type owl:ObjectProperty ;
+               rdfs:domain :Discipline ;
+               rdfs:range <http://www.co-ode.org/ontologies/list.owl#OWLList> ;
+               rdfs:comment "Отображает все имеющиеся у дисциплины дидактические единицы"^^xsd:string .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#groupOf
+:groupOf rdf:type owl:ObjectProperty ;
+         owl:inverseOf :groupedTo .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#groupedTo
+:groupedTo rdf:type owl:ObjectProperty .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#hasDidacticUnitGroup
+:hasDidacticUnitGroup rdf:type owl:ObjectProperty ;
+                      rdfs:domain :Topic ;
+                      rdfs:range :Didactic_Unit_Group ;
+                      rdfs:comment "Тема содержит группу дидактических единиц"^^xsd:string .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#hasDiscipline
+:hasDiscipline rdf:type owl:ObjectProperty ;
+               rdfs:range :Discipline ;
+               rdfs:comment "Наличие предиката означает, что субъект содержит в себе дисциплину"^^xsd:string .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#hasTopics
+:hasTopics rdf:type owl:ObjectProperty ;
+           rdfs:range <http://www.co-ode.org/ontologies/list.owl#OWLList> ;
+           rdfs:comment "Наличие предиката означает, что субъект содержит в себе список тем"^^xsd:string .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#previousTopics
+:previousTopics rdf:type owl:ObjectProperty ;
+                rdfs:domain :Topic ;
+                rdfs:range :Topic ;
+                rdfs:comment "Вычислимая связь, которая обозначает темы из других курсов, которые пройдены в предыдущих для текущей темы семестрах. Используется для вычисления повторяющегося материала. Для вычисления связи используется SWRL-правило."^^xsd:string .
 
 
 #################################################################
@@ -40,16 +86,15 @@
         rdfs:range xsd:string .
 
 
-###  http://www.kpfu.ru/admin/ontologies/2019/courses#discipline_name
-:discipline_name rdf:type owl:DatatypeProperty ;
-                 rdfs:domain :Discipline ;
-                 rdfs:range xsd:string .
-
-
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#name
 :name rdf:type owl:DatatypeProperty ;
-      rdfs:domain :Topic ;
       rdfs:range xsd:string .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#semester
+:semester rdf:type owl:DatatypeProperty ;
+          rdfs:range xsd:integer ;
+          rdfs:comment "Обоначает, что субъект относится к определенному семестру" .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#term
@@ -64,249 +109,126 @@
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Ability
 :Ability rdf:type owl:Class ;
-         owl:disjointWith :Competence ,
-                          :Control_Form ,
-                          :Control_Form_Type ,
-                          :Didactic_Unit ,
-                          :Didactic_Unit_Type ,
-                          :Discipline ,
-                          :Educational_Form ,
-                          :Educational_Technology ,
-                          :Knowledge ,
-                          :Logistics ,
-                          :Resource ,
-                          :Sample_Job ,
-                          :Score ,
-                          :Skill ,
-                          :Syllabus ,
-                          :Term ,
-                          :Topic ,
-                          :Training_Cycle .
+         rdfs:comment """Умение. Часть раздела РПД \"Знания, умения, навыки\".
+Пример:
+ 2. должен уметь:  выделять специфику философского подхода к миру; видеть сходства и различия философских концепций; определять структуру аргументации философских идей; находить сильные и слабые стороны отдельных философских идей и концепций; применять философское знание в области профессиональной деятельности; применять философское знание в анализе элементов чужого и собственного мировоззрения; излагать устно и письменно воспринятое философское знание; конспектировать учебную и научную литературу по философии, пересказывать прочитанное своими словами; интерпретировать и анализировать тексты философской проблематики."""^^xsd:string .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Competence
 :Competence rdf:type owl:Class ;
-            owl:disjointWith :Control_Form ,
-                             :Control_Form_Type ,
-                             :Didactic_Unit ,
-                             :Didactic_Unit_Type ,
-                             :Discipline ,
-                             :Educational_Form ,
-                             :Educational_Technology ,
-                             :Knowledge ,
-                             :Logistics ,
-                             :Resource ,
-                             :Sample_Job ,
-                             :Score ,
-                             :Skill ,
-                             :Syllabus ,
-                             :Term ,
-                             :Topic ,
-                             :Training_Cycle .
+            rdfs:comment """Компетенции.
+Пример:
+Шифр компетенции: ОК-1 (общекультурные компетенции)
+Расшифровка приобретаемой компетенции: способность использовать основы философских знаний для формирования мировоззренческой позиции"""^^xsd:string .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Control_Form
-:Control_Form rdf:type owl:Class ;
-              owl:disjointWith :Control_Form_Type ,
-                               :Didactic_Unit ,
-                               :Didactic_Unit_Type ,
-                               :Discipline ,
-                               :Educational_Form ,
-                               :Educational_Technology ,
-                               :Knowledge ,
-                               :Logistics ,
-                               :Resource ,
-                               :Sample_Job ,
-                               :Score ,
-                               :Skill ,
-                               :Syllabus ,
-                               :Term ,
-                               :Topic ,
-                               :Training_Cycle .
+:Control_Form rdf:type owl:Class .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Control_Form_Type
 :Control_Form_Type rdf:type owl:Class ;
-                   owl:disjointWith :Didactic_Unit ,
-                                    :Didactic_Unit_Type ,
-                                    :Discipline ,
-                                    :Educational_Form ,
-                                    :Educational_Technology ,
-                                    :Knowledge ,
-                                    :Logistics ,
-                                    :Resource ,
-                                    :Sample_Job ,
-                                    :Score ,
-                                    :Skill ,
-                                    :Syllabus ,
-                                    :Term ,
-                                    :Topic ,
-                                    :Training_Cycle .
+                   rdfs:comment """Тип формы контроля.
+Пример:
+Контрольная работа, лабораторная работа, тест, эссе и т.п."""^^xsd:string .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Didactic_Unit
 :Didactic_Unit rdf:type owl:Class ;
-               owl:disjointWith :Didactic_Unit_Type ,
-                                :Discipline ,
-                                :Educational_Form ,
-                                :Educational_Technology ,
-                                :Knowledge ,
-                                :Logistics ,
-                                :Resource ,
-                                :Sample_Job ,
-                                :Score ,
-                                :Skill ,
-                                :Syllabus ,
-                                :Term ,
-                                :Topic ,
-                                :Training_Cycle .
+               rdfs:comment """Дидактическая единица - конкретная теорема, аксиома, правило и т.п. 
+Пример:
+Мировоззрение как духовный способ освоения человеком наиболее общих взглядов на мир и место в нем."""^^xsd:string .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Didactic_Unit_Group
+:Didactic_Unit_Group rdf:type owl:Class ;
+                     rdfs:comment "Группа из дидактических единиц. Используется для обозначения коллекции дидактических единиц, прикрепленных к определенной теме. Суть в том, что дидактические единицы имеют иерархические связи, а также связи вида пререквизит, но при заполнении РПД пользователь их не указывает. С группой из дидактических единиц связаны термины."^^xsd:string .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Didactic_Unit_Type
 :Didactic_Unit_Type rdf:type owl:Class ;
-                    owl:disjointWith :Discipline ,
-                                     :Educational_Form ,
-                                     :Educational_Technology ,
-                                     :Knowledge ,
-                                     :Logistics ,
-                                     :Resource ,
-                                     :Sample_Job ,
-                                     :Score ,
-                                     :Skill ,
-                                     :Syllabus ,
-                                     :Term ,
-                                     :Topic ,
-                                     :Training_Cycle .
+                    rdfs:comment """Тип дидактической единицы.
+Пример:
+Теорема, аксиома, правило и т.п."""^^xsd:string .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Discipline
 :Discipline rdf:type owl:Class ;
-            owl:disjointWith :Educational_Form ,
-                             :Educational_Technology ,
-                             :Knowledge ,
-                             :Logistics ,
-                             :Resource ,
-                             :Sample_Job ,
-                             :Score ,
-                             :Skill ,
-                             :Syllabus ,
-                             :Term ,
-                             :Topic ,
-                             :Training_Cycle .
+            rdfs:comment """Дисциплина.
+Пример:
+Философия"""^^xsd:string .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Educational_Form
-:Educational_Form rdf:type owl:Class ;
-                  owl:disjointWith :Educational_Technology ,
-                                   :Knowledge ,
-                                   :Logistics ,
-                                   :Resource ,
-                                   :Sample_Job ,
-                                   :Score ,
-                                   :Skill ,
-                                   :Syllabus ,
-                                   :Term ,
-                                   :Topic ,
-                                   :Training_Cycle .
+:Educational_Form rdf:type owl:Class .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Educational_Plan
+:Educational_Plan rdf:type owl:Class ;
+                  rdfs:comment "Учебный план" .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Educational_Technology
 :Educational_Technology rdf:type owl:Class ;
-                        owl:disjointWith :Knowledge ,
-                                         :Logistics ,
-                                         :Resource ,
-                                         :Sample_Job ,
-                                         :Score ,
-                                         :Skill ,
-                                         :Syllabus ,
-                                         :Term ,
-                                         :Topic ,
-                                         :Training_Cycle .
+                        rdfs:comment "Образовательная технология. Систематический метод планирования, применения процесса обучения и усвоения знания"^^xsd:string .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Knowledge
 :Knowledge rdf:type owl:Class ;
-           owl:disjointWith :Logistics ,
-                            :Resource ,
-                            :Sample_Job ,
-                            :Score ,
-                            :Skill ,
-                            :Syllabus ,
-                            :Term ,
-                            :Topic ,
-                            :Training_Cycle .
+           rdfs:comment """Знания. Часть раздела РПД \"Знания, умения, навыки\".
+Пример:
+1. должен знать:  основные концепции различных этапов развития мировой философской мысли; отличительные свойства различных этапов развития мировой философской мысли и отдельных философских течений; суть наиболее значимых философских проблем и основные варианты их решения в различных философских школах."""^^xsd:string .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Logistics
-:Logistics rdf:type owl:Class ;
-           owl:disjointWith :Resource ,
-                            :Sample_Job ,
-                            :Score ,
-                            :Skill ,
-                            :Syllabus ,
-                            :Term ,
-                            :Topic ,
-                            :Training_Cycle .
+:Logistics rdf:type owl:Class .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Resource
 :Resource rdf:type owl:Class ;
-          owl:disjointWith :Sample_Job ,
-                           :Score ,
-                           :Skill ,
-                           :Syllabus ,
-                           :Term ,
-                           :Topic ,
-                           :Training_Cycle .
+          rdfs:comment """Материально-техническое обеспечение дисциплины(модуля).
+Пример:
+Учебно-методическая литература для данной дисциплины имеется в наличии в электронно-библиотечной системе \" БиблиоРоссика\", доступ к которой предоставлен студентам. В ЭБС \" БиблиоРоссика \" представлены коллекции актуальной научной и учебной литературы по гуманитарным наукам, включающие в себя публикации ведущих российских издательств гуманитарной литературы, издания на английском языке ведущих американских и европейских издательств, а также редкие и малотиражные издания российских региональных вузов. ЭБС \"БиблиоРоссика\" обеспечивает широкий законный доступ к необходимым для образовательного процесса изданиям с использованием инновационных технологий и соответствует всем требованиям федеральных государственных образовательных стандартов высшего профессионального образования (ФГОС ВПО) нового поколения. Учебно-методическая литература для данной дисциплины имеется в наличии в электронно-библиотечной системе \"ZNANIUM.COM\", доступ к которой предоставлен студентам. ЭБС \"ZNANIUM.COM\" содержит произведения крупнейших российских учёных, руководителей государственных органов, преподавателей ведущих вузов страны, высококвалифицированных специалистов в различных сферах бизнеса. Фонд библиотеки сформирован с учетом всех изменений образовательных стандартов и включает учебники, учебные пособия, УМК, монографии, авторефераты, диссертации, энциклопедии, словари и справочники, законодательно-нормативные документы, специальные периодические издания и издания, выпускаемые издательствами вузов. В настоящее время ЭБС ZNANIUM.COM соответствует всем требованиям федеральных государственных образовательных стандартов высшего профессионального образования (ФГОС ВПО) нового поколения. Учебно-методическая литература для данной дисциплины имеется в наличии в электронно-библиотечной системе Издательства \"Лань\" , доступ к которой предоставлен студентам. ЭБС Издательства \"Лань\" включает в себя электронные версии книг издательства \"Лань\" и других ведущих издательств учебной литературы, а также электронные версии периодических изданий по естественным, техническим и гуманитарным наукам. ЭБС Издательства \"Лань\" обеспечивает доступ к научной, учебной литературе и научным периодическим изданиям по максимальному количеству профильных направлений с соблюдением всех авторских и смежных прав. Учебно-методическая литература для данной дисциплины имеется в наличии в электронно-библиотечной системе \"Консультант студента\" , доступ к которой предоставлен студентам. Электронная библиотечная система \"Консультант студента\" предоставляет полнотекстовый доступ к современной учебной литературе по основным дисциплинам, изучаемым в медицинских вузах (представлены издания как чисто медицинского профиля, так и по естественным, точным и общественным наукам). ЭБС предоставляет вузу наиболее полные комплекты необходимой литературы в соответствии с требованиями государственных образовательных стандартов с соблюдением авторских и смежных прав. проектор и ноутбук; принтер и копировальный аппарат для создания раздаточных материалов; ватман и фломастеры для выполнения творческих заданий в подгруппах."""^^xsd:string .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Sample_Job
-:Sample_Job rdf:type owl:Class ;
-            owl:disjointWith :Score ,
-                             :Skill ,
-                             :Syllabus ,
-                             :Term ,
-                             :Topic ,
-                             :Training_Cycle .
+:Sample_Job rdf:type owl:Class .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Score
-:Score rdf:type owl:Class ;
-       owl:disjointWith :Skill ,
-                        :Syllabus ,
-                        :Term ,
-                        :Topic ,
-                        :Training_Cycle .
+:Score rdf:type owl:Class .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Semester
+:Semester rdf:type owl:Class .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Skill
 :Skill rdf:type owl:Class ;
-       owl:disjointWith :Syllabus ,
-                        :Term ,
-                        :Topic ,
-                        :Training_Cycle .
+       rdfs:comment """Навыки. Часть раздела РПД \"Знания, умения, навыки\".
+Пример:
+ 3. должен владеть:  терминологическим аппаратом философии; навыками выступления перед аудиторией, участия в дискуссии; базовыми приёмами философского анализа материала."""^^xsd:string .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Syllabus
-:Syllabus rdf:type owl:Class ;
-          owl:disjointWith :Term ,
-                           :Topic ,
-                           :Training_Cycle .
+:Syllabus rdf:type owl:Class .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Term
 :Term rdf:type owl:Class ;
-      owl:disjointWith :Topic ,
-                       :Training_Cycle .
+      rdfs:comment "Термин. Используется поисковой системой, служит для реализации инвертированного индекса."^^xsd:string .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Topic
 :Topic rdf:type owl:Class ;
-       owl:disjointWith :Training_Cycle .
+       rdfs:comment """Тема курса.
+Пример:
+Философия в ряду других форм духовного освоения мира человеком."""^^xsd:string .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Training_Cycle
-:Training_Cycle rdf:type owl:Class .
+:Training_Cycle rdf:type owl:Class ;
+                rdfs:comment "Учебный цикл. Совокупность дисциплин (модулей) основной образовательной программы (естественнонаучный, профессиональный, гуманитарный и т.п.)"^^xsd:string .
 
 
 #################################################################
@@ -314,20 +236,24 @@
 #################################################################
 
 [ rdf:type owl:AllDisjointClasses ;
-  owl:members ( :Ability
+  owl:members ( <http://www.co-ode.org/ontologies/list.owl#OWLList>
+                :Ability
                 :Competence
                 :Control_Form
                 :Control_Form_Type
                 :Didactic_Unit
+                :Didactic_Unit_Group
                 :Didactic_Unit_Type
                 :Discipline
                 :Educational_Form
+                :Educational_Plan
                 :Educational_Technology
                 :Knowledge
                 :Logistics
                 :Resource
                 :Sample_Job
                 :Score
+                :Semester
                 :Skill
                 :Syllabus
                 :Term
@@ -336,5 +262,150 @@
               )
 ] .
 
+
+#################################################################
+#    Rules
+#################################################################
+
+:t1 rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:s1 rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:t2 rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:s2 rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:ed_plan1 rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:c1 rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:c2 rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:ed_plan2 rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:l1 rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:l2 rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:l3 rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+:l4 rdf:type <http://www.w3.org/2003/11/swrl#Variable> .
+
+[ <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#isRuleEnabled> "true"^^xsd:boolean ;
+   rdfs:comment "Правило для вычисления тем из других курсов, которые были пройдены в предыдущих для текущей темы семестрах"^^xsd:string ;
+   rdfs:label "previousTopicsRule"^^xsd:string ;
+   rdf:type <http://www.w3.org/2003/11/swrl#Imp> ;
+   <http://www.w3.org/2003/11/swrl#body> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :semester ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :t1 ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> :s1
+                                                     ] ;
+                                           rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                      rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DatavaluedPropertyAtom> ;
+                                                                  <http://www.w3.org/2003/11/swrl#propertyPredicate> :semester ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument1> :t2 ;
+                                                                  <http://www.w3.org/2003/11/swrl#argument2> :s2
+                                                                ] ;
+                                                      rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                 rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#BuiltinAtom> ;
+                                                                             <http://www.w3.org/2003/11/swrl#builtin> <http://www.w3.org/2003/11/swrlb#lessThanOrEqual> ;
+                                                                             <http://www.w3.org/2003/11/swrl#arguments> ( :s1
+                                                                                                                          :s2
+                                                                                                                        )
+                                                                           ] ;
+                                                                 rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                            rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                                        <http://www.w3.org/2003/11/swrl#classPredicate> :Topic ;
+                                                                                        <http://www.w3.org/2003/11/swrl#argument1> :t1
+                                                                                      ] ;
+                                                                            rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                       rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#ClassAtom> ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#classPredicate> :Topic ;
+                                                                                                   <http://www.w3.org/2003/11/swrl#argument1> :t2
+                                                                                                 ] ;
+                                                                                       rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                  rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#propertyPredicate> :hasDiscipline ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#argument1> :ed_plan1 ;
+                                                                                                              <http://www.w3.org/2003/11/swrl#argument2> :c1
+                                                                                                            ] ;
+                                                                                                  rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                             rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                                         <http://www.w3.org/2003/11/swrl#propertyPredicate> :hasDiscipline ;
+                                                                                                                         <http://www.w3.org/2003/11/swrl#argument1> :ed_plan1 ;
+                                                                                                                         <http://www.w3.org/2003/11/swrl#argument2> :c2
+                                                                                                                       ] ;
+                                                                                                             rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                                        rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#SameIndividualAtom> ;
+                                                                                                                                    <http://www.w3.org/2003/11/swrl#argument1> :ed_plan1 ;
+                                                                                                                                    <http://www.w3.org/2003/11/swrl#argument2> :ed_plan2
+                                                                                                                                  ] ;
+                                                                                                                        rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                                                   rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                                                               <http://www.w3.org/2003/11/swrl#propertyPredicate> :hasTopics ;
+                                                                                                                                               <http://www.w3.org/2003/11/swrl#argument1> :c1 ;
+                                                                                                                                               <http://www.w3.org/2003/11/swrl#argument2> :l1
+                                                                                                                                             ] ;
+                                                                                                                                   rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                                                              rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                                                                          <http://www.w3.org/2003/11/swrl#propertyPredicate> :hasTopics ;
+                                                                                                                                                          <http://www.w3.org/2003/11/swrl#argument1> :c2 ;
+                                                                                                                                                          <http://www.w3.org/2003/11/swrl#argument2> :l2
+                                                                                                                                                        ] ;
+                                                                                                                                              rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                                                                         rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                                                                                     <http://www.w3.org/2003/11/swrl#propertyPredicate> <http://www.co-ode.org/ontologies/list.owl#isFollowedBy> ;
+                                                                                                                                                                     <http://www.w3.org/2003/11/swrl#argument1> :l1 ;
+                                                                                                                                                                     <http://www.w3.org/2003/11/swrl#argument2> :l3
+                                                                                                                                                                   ] ;
+                                                                                                                                                         rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                                                                                    rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                                                                                                <http://www.w3.org/2003/11/swrl#propertyPredicate> <http://www.co-ode.org/ontologies/list.owl#isFollowedBy> ;
+                                                                                                                                                                                <http://www.w3.org/2003/11/swrl#argument1> :l2 ;
+                                                                                                                                                                                <http://www.w3.org/2003/11/swrl#argument2> :l4
+                                                                                                                                                                              ] ;
+                                                                                                                                                                    rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                                                                                               rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                                                                                                           <http://www.w3.org/2003/11/swrl#propertyPredicate> <http://www.co-ode.org/ontologies/list.owl#hasContents> ;
+                                                                                                                                                                                           <http://www.w3.org/2003/11/swrl#argument1> :l3 ;
+                                                                                                                                                                                           <http://www.w3.org/2003/11/swrl#argument2> :t1
+                                                                                                                                                                                         ] ;
+                                                                                                                                                                               rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                                                                                                          rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                                                                                                                                                                      <http://www.w3.org/2003/11/swrl#propertyPredicate> <http://www.co-ode.org/ontologies/list.owl#hasContents> ;
+                                                                                                                                                                                                      <http://www.w3.org/2003/11/swrl#argument1> :l4 ;
+                                                                                                                                                                                                      <http://www.w3.org/2003/11/swrl#argument2> :t2
+                                                                                                                                                                                                    ] ;
+                                                                                                                                                                                          rdf:rest [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                                                                                                                                                                                     rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#DifferentIndividualsAtom> ;
+                                                                                                                                                                                                                 <http://www.w3.org/2003/11/swrl#argument1> :c1 ;
+                                                                                                                                                                                                                 <http://www.w3.org/2003/11/swrl#argument2> :c2
+                                                                                                                                                                                                               ] ;
+                                                                                                                                                                                                     rdf:rest rdf:nil
+                                                                                                                                                                                                   ]
+                                                                                                                                                                                        ]
+                                                                                                                                                                             ]
+                                                                                                                                                                  ]
+                                                                                                                                                       ]
+                                                                                                                                            ]
+                                                                                                                                 ]
+                                                                                                                      ]
+                                                                                                           ]
+                                                                                                ]
+                                                                                     ]
+                                                                          ]
+                                                               ]
+                                                    ]
+                                         ] ;
+   <http://www.w3.org/2003/11/swrl#head> [ rdf:type <http://www.w3.org/2003/11/swrl#AtomList> ;
+                                           rdf:first [ rdf:type <http://www.w3.org/2003/11/swrl#IndividualPropertyAtom> ;
+                                                       <http://www.w3.org/2003/11/swrl#propertyPredicate> :previousTopics ;
+                                                       <http://www.w3.org/2003/11/swrl#argument1> :t2 ;
+                                                       <http://www.w3.org/2003/11/swrl#argument2> :t1
+                                                     ] ;
+                                           rdf:rest rdf:nil
+                                         ]
+ ] .
 
 ###  Generated by the OWL API (version 4.5.9.2019-02-01T07:24:44Z) https://github.com/owlcs/owlapi

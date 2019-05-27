@@ -41,39 +41,53 @@ public class BM25FSearchService implements SearchService {
          */
         List<String> requestWords = termService.extractTerms(text);
         List<Document> documents = documentRepository.findDocuments(entity, requestWords);
-        if (documents.size() != 0) {
-
-            List<TermCount> termCounts = documentRepository.findTermCounts(entity, requestWords);
-            Double averageLength = documentRepository.averageDocLength(entity);
-            Integer countDocuments = documentRepository.countDocuments(entity);
-
-            Map<String, Map<String, TermCount>> documentMap = getDocumentMap(termCounts);
-            List<Double> requestWordVector = calculateIdfForRequest(requestWords, termCounts, countDocuments);
-
-            for (Document document : documents) {
-                double score = 0;
-                for (String requestWord : requestWords) {
-                    int index = requestWords.indexOf(requestWord);
-                    double termFreq;
-                    TermCount termCount = documentMap.get(document.getId()).get(requestWord);
-                    if (termCount == null) {
-                        termFreq = 0;
-                    }
-                    else {
-                        termFreq = (double) termCount.getTermCount() / document.getWordCount();
-                    }
-                    score += requestWordVector.get(index)
-                            * (termFreq * (K1 + 1))
-                            / (termFreq + K1 * (1 - B + B * document.getWordCount() / averageLength));
-                }
-                document.setScore(score);
-            }
-            return documents.stream()
-                    .sorted(Comparator.comparing(Document::getScore).reversed())
-                    .limit(MAX_RESULT_COUNT)
-                    .collect(Collectors.toList());
+        if (documents == null || documents.size() == 0) {
+            return new ArrayList<>();
         }
-        return new ArrayList<>();
+        List<TermCount> termCounts = documentRepository.findTermCounts(entity, requestWords);
+        return searchDocs(requestWords, documents, termCounts, entity);
+    }
+
+    @Override
+    public <T, E> List<Document> searchGrouped(String text, Class<T> entity, Class<E> group) {
+        List<String> requestWords = termService.extractTerms(text);
+        List<Document> documents = documentRepository.findGroupedDocuments(entity, group, requestWords);
+        if (documents == null || documents.size() == 0) {
+            return new ArrayList<>();
+        }
+        List<TermCount> termCounts = documentRepository.findGroupedTermCounts(entity, group, requestWords);
+        return searchDocs(requestWords, documents, termCounts, entity);
+    }
+
+    private <T> List<Document> searchDocs(List<String> requestWords, List<Document> documents, List<TermCount> termCounts, Class<T> entity) {
+
+        Double averageLength = documentRepository.averageDocLength(entity);
+        Integer countDocuments = documentRepository.countDocuments(entity);
+
+        Map<String, Map<String, TermCount>> documentMap = getDocumentMap(termCounts);
+        List<Double> requestWordVector = calculateIdfForRequest(requestWords, termCounts, countDocuments);
+
+        for (Document document : documents) {
+            double score = 0;
+            for (String requestWord : requestWords) {
+                int index = requestWords.indexOf(requestWord);
+                double termFreq;
+                TermCount termCount = documentMap.get(document.getId()).get(requestWord);
+                if (termCount == null) {
+                    termFreq = 0;
+                } else {
+                    termFreq = (double) termCount.getTermCount() / document.getWordCount();
+                }
+                score += requestWordVector.get(index)
+                        * (termFreq * (K1 + 1))
+                        / (termFreq + K1 * (1 - B + B * document.getWordCount() / averageLength));
+            }
+            document.setScore(score);
+        }
+        return documents.stream()
+                .sorted(Comparator.comparing(Document::getScore).reversed())
+                .limit(MAX_RESULT_COUNT)
+                .collect(Collectors.toList());
     }
 
     private Map<String, Map<String, TermCount>> getDocumentMap(List<TermCount> termCounts) {
@@ -84,8 +98,7 @@ public class BM25FSearchService implements SearchService {
                 termCountMap = new HashMap<>();
                 termCountMap.put(termCount.getTerm(), termCount);
                 documentMap.put(termCount.getDocId(), termCountMap);
-            }
-            else {
+            } else {
                 termCountMap.put(termCount.getTerm(), termCount);
             }
         }
