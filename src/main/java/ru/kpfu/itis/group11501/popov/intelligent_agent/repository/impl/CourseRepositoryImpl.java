@@ -3,6 +3,7 @@ package ru.kpfu.itis.group11501.popov.intelligent_agent.repository.impl;
 import org.aksw.jena_sparql_api.mapper.util.JpaUtils;
 import org.springframework.stereotype.Repository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Course;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.model.OWLList;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.CourseRepository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.GeneralRepository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.PojoMappingService;
@@ -42,12 +43,22 @@ public class CourseRepositoryImpl implements CourseRepository {
     public List<Course> findAll(String searchText) {
         String select = "JSON { 'id' : ?subject, 'name' : ?name }\n" +
                 "WHERE {\n" +
-                "\t?subject course:discipline_name ?name .\n" +
+                "\t?subject course:name ?name .\n" +
                 "\tFILTER regex (?name \""+ searchText + "*\", \"i\") \n" +
                 "}";
         String result = generalRepository.selectArq(searchText);
         Course [] courses = pojoMappingService.map(result, Course[].class);
         return Arrays.asList(courses);
+    }
+
+    @Override
+    public void addDidacticUnits(Course course, OWLList didacticUnits) {
+        generalRepository.addTriple(course, "course:didacticUnits", didacticUnits);
+    }
+
+    @Override
+    public void addTopics(Course course, OWLList topics) {
+        generalRepository.addTriple(course, "course:hasTopics", topics);
     }
 
 }

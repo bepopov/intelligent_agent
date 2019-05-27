@@ -1,8 +1,6 @@
 package ru.kpfu.itis.group11501.popov.intelligent_agent.repository.impl;
 
 import com.google.common.collect.Lists;
-import org.springframework.expression.ExpressionParser;
-import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.stereotype.Repository;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.EmptyList;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.OWLList;
@@ -18,14 +16,10 @@ import java.util.UUID;
 public class OWLListRepositoryImpl implements OWLListRepository {
 
     private EntityManager entityManager;
-    private TemplateParserContext parserContext;
-    private ExpressionParser expressionParser;
     private GeneralRepository generalRepository;
 
-    public OWLListRepositoryImpl(EntityManager entityManager, TemplateParserContext parserContext, ExpressionParser expressionParser, GeneralRepository generalRepository) {
+    public OWLListRepositoryImpl(EntityManager entityManager, GeneralRepository generalRepository) {
         this.entityManager = entityManager;
-        this.parserContext = parserContext;
-        this.expressionParser = expressionParser;
         this.generalRepository = generalRepository;
     }
 

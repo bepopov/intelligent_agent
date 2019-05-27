@@ -10,7 +10,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * DidacticalUnit
+ * DidacticUnit
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-07T14:49:56.665+03:00[Europe/Moscow]")
 
@@ -60,7 +60,7 @@ public class DidacticalUnit   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DidacticalUnit {\n");
+    sb.append("class DidacticUnit {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("}");
