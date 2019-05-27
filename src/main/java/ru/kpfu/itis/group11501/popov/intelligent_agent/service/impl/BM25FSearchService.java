@@ -28,17 +28,6 @@ public class BM25FSearchService implements SearchService {
 
     @Override
     public <T> List<Document> search(String text, Class<T> entity) {
-        /*
-        Определиться, как будет вестись поиск: по всем параметрам сразу или по-отдельности?
-        Есть задача поиска похожего топика.
-        1. Найти IDF для каждого слова
-        а.) Посчитать количество документов, в которые входит слово
-        б.) Посчитать общее количество документов
-        2. Найти частоту слова в каждом документе
-        3. Посчитать количество слов в каждом документе
-        4. Посчитать среднее количество слов в каждом документе
-        5. Вычислить по формуле
-         */
         List<String> requestWords = termService.extractTerms(text);
         List<Document> documents = documentRepository.findDocuments(entity, requestWords);
         if (documents == null || documents.size() == 0) {
