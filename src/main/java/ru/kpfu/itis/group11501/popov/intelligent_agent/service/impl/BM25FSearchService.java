@@ -45,7 +45,8 @@ public class BM25FSearchService implements SearchService {
             return new ArrayList<>();
         }
         List<TermCount> termCounts = documentRepository.findTermCounts(entity, requestWords);
-        return searchDocs(requestWords, documents, termCounts, entity);
+        Integer countDocuments = documentRepository.countDocuments(entity);
+        return searchDocs(requestWords, documents, termCounts, countDocuments, entity);
     }
 
     @Override
@@ -56,13 +57,17 @@ public class BM25FSearchService implements SearchService {
             return new ArrayList<>();
         }
         List<TermCount> termCounts = documentRepository.findGroupedTermCounts(entity, group, requestWords);
-        return searchDocs(requestWords, documents, termCounts, entity);
+        Integer countDocuments = documentRepository.countGroupedDocuments(entity, group);
+        return searchDocs(requestWords, documents, termCounts, countDocuments, group);
     }
 
-    private <T> List<Document> searchDocs(List<String> requestWords, List<Document> documents, List<TermCount> termCounts, Class<T> entity) {
+    private <T> List<Document> searchDocs(List<String> requestWords,
+                                          List<Document> documents,
+                                          List<TermCount> termCounts,
+                                          Integer countDocuments,
+                                          Class<T> entity) {
 
         Double averageLength = documentRepository.averageDocLength(entity);
-        Integer countDocuments = documentRepository.countDocuments(entity);
 
         Map<String, Map<String, TermCount>> documentMap = getDocumentMap(termCounts);
         List<Double> requestWordVector = calculateIdfForRequest(requestWords, termCounts, countDocuments);
@@ -117,7 +122,7 @@ public class BM25FSearchService implements SearchService {
         for (String requestWord : requestWords) {
             double idf = log((countDocuments - termInAllArticles.get(requestWord) + 0.5)
                     / (termInAllArticles.get(requestWord) + 0.5));
-            idf = Math.max(idf, 0);
+            idf = Math.max(idf, 0.0);
             idfVector.add(idf);
         }
         return idfVector;

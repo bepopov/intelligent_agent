@@ -124,7 +124,7 @@ public class DocumentRepositoryImpl implements DocumentRepository {
     @Override
     public <T, E> List<TermCount> findGroupedTermCounts(Class<T> entity, Class<E> group, List<String> requestWords) {
         RdfType typeEntity = entity.getAnnotation(RdfType.class);
-        RdfType typeGroup = entity.getAnnotation(RdfType.class);
+        RdfType typeGroup = group.getAnnotation(RdfType.class);
         String query =
                 "SELECT ?docid ?term (count(?term) as ?termcount)\n" +
                         "WHERE {\n" +
@@ -138,6 +138,19 @@ public class DocumentRepositoryImpl implements DocumentRepository {
                         "}\n" +
                         "GROUP BY ?docid ?term ?termcount";
         return generalRepository.selectSparql(query, TermCount.class);
+    }
+
+    @Override
+    public <T, E> Integer countGroupedDocuments(Class<T> entity, Class<E> group) {
+        RdfType typeEntity = entity.getAnnotation(RdfType.class);
+        RdfType typeGroup = group.getAnnotation(RdfType.class);
+        String query = "SELECT (count(?doc) as ?param)\n" +
+                "       WHERE {\n" +
+                "                ?doc a " + typeEntity.value() + " .\n" +
+                "                ?doc course:groupedTo ?group .\n" +
+                "                ?group a " + typeGroup.value() + "\n" +
+                "       }";
+        return generalRepository.selectInteger(query);
     }
 
     private String requestWordsFilter(List<String> requestWords) {

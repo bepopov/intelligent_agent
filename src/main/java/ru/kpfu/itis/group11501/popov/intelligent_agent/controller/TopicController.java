@@ -12,7 +12,6 @@ import ru.kpfu.itis.group11501.popov.intelligent_agent.service.TopicService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Controller
 public class TopicController {
@@ -99,10 +98,10 @@ public class TopicController {
 
     @RequestMapping("/du")
     @ResponseBody
-    public List<Document> du(String text) {
-        List<Document> documents = searchService.search(text, DidacticUnitGroup.class);
-        List<String> ids = documents.stream().map(Document::getId).collect(Collectors.toList());
-        return new ArrayList<>();
+    public List<Document> du() {
+        String text = "Мировоззрение как духовная религия. Религиозный человек";
+        List<Document> documents = searchService.searchGrouped(text, DidacticUnit.class, DidacticUnitGroup.class);
+        return documents;
     }
 
 }

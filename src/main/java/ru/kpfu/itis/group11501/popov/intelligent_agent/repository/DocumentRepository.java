@@ -22,4 +22,6 @@ public interface DocumentRepository {
 
     <T, E> List<TermCount> findGroupedTermCounts(Class<T> entity, Class<E> group, List<String> requestWords);
 
+    <T, E> Integer countGroupedDocuments(Class<T> entity, Class<E> group);
+
 }
