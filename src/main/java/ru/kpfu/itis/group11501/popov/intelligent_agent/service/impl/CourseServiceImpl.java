@@ -27,7 +27,7 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void add(Course course,
-                    EducationPlan educationPlan,
+                    String educationPlan,
                     List<Topic> topics,
                     List<DidacticUnitGroup> didacticUnitGroups) {
         courseRepository.add(course);

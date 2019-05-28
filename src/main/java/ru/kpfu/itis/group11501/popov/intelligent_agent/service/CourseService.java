@@ -7,7 +7,7 @@ import java.util.List;
 public interface CourseService {
 
     void add(Course course,
-             EducationPlan educationPlan,
+             String educationPlan,
              List<Topic> topics,
              List<DidacticUnitGroup> didacticUnits);
 

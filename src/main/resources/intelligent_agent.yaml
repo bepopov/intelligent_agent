@@ -122,7 +122,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResultList[DidacticalUnit]'
+                $ref: '#/components/schemas/ResultList[DidacticUnit]'
     post:
       operationId: createDidacticalUnitForTopic
       description: Создать дидактическую единицу для темы
@@ -147,7 +147,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/DidacticUnit'
 
-  /institutes/{institute_uuid}/educational_directions/{direction_uuid}/graduate_degrees/{degree_uuid}/competences:
+  /institutes/{institute_uuid}/education_directions/{direction_uuid}/graduate_degrees/{degree_uuid}/competences:
     get:
       operationId: getAllCompetences
       description: Получить все компетенции для направления подготовки
@@ -182,6 +182,80 @@ paths:
               schema:
                 $ref: '#/components/schemas/ResultList[Competence]'
 
+  /institutes/{institute_uuid}/education_directions/{direction_uuid}/courses:
+    parameters:
+      - name: institute_uuid
+        in: path
+        description: UUID института
+        schema:
+          type: string
+          format: uuid
+          example: 4daa9121-a1cb-416c-840a-7d793e12101f
+      - name: direction_uuid
+        in: path
+        description: UUID направления подготовки
+        schema:
+          type: string
+          format: uuid
+          example: 4daa9121-a1cb-416c-840a-7d793e12101f
+    post:
+      operationId: createCourse
+      description: Создать дисциплину
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateCourse'
+      responses:
+        200:
+          description: Дидактические единицы успешно созданы
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateCourse'
+
+  /institutes/{institute_uuid}/education_directions/{direction_uuid}/education_plans:
+    parameters:
+      - name: institute_uuid
+        in: path
+        description: UUID института
+        schema:
+          type: string
+          format: uuid
+          example: 4daa9121-a1cb-416c-840a-7d793e12101f
+      - name: direction_uuid
+        in: path
+        description: UUID направления подготовки
+        schema:
+          type: string
+          format: uuid
+          example: 4daa9121-a1cb-416c-840a-7d793e12101f
+    get:
+      operationId: getAllEducationPlans
+      description: Получить все учебные планы
+      responses:
+        200:
+          description: Учебные планы успешно получены
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ResultList[EducationPlan]'
+    post:
+      operationId: createEducationPlan
+      description: Создать учебный план
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EducationPlan'
+      responses:
+        200:
+          description: Учебный план успешно создан
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EducationPlan'
+
   /didactic_units:
     get:
       operationId: getDidacticUnits
@@ -204,6 +278,7 @@ components:
   schemas:
 
     ResultList[Topic]:
+      description: Список тем
       properties:
         items:
           type: array
@@ -211,13 +286,15 @@ components:
             $ref: '#/components/schemas/Topic'
 
     ResultList[Course]:
+      description: Список курсов
       properties:
         items:
           type: array
           items:
             $ref: '#/components/schemas/Course'
 
-    ResultList[DidacticalUnit]:
+    ResultList[DidacticUnit]:
+      description: Список дидактических единиц
       properties:
         items:
           type: array
@@ -225,11 +302,20 @@ components:
             $ref: '#/components/schemas/DidacticUnit'
 
     ResultList[Competence]:
+      description: Список компетенций
       properties:
         items:
           type: array
           items:
             $ref: '#/components/schemas/Competence'
+
+    ResultList[EducationPlan]:
+      description: Список учебных планов
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/EducationPlan'
 
     Topic:
       properties:
@@ -268,3 +354,31 @@ components:
           format: uuid
           example: 4daa9121-a1cb-416c-840a-7d793e12101f
           description: URI компетенции = [URI онтологии]#competence[UUID]
+
+    EducationPlan:
+      properties:
+        name:
+          type: string
+          example: (не предусмотрено) очное 2016г.
+          description: Название учебного плана
+
+    CreateCourse:
+      properties:
+        id:
+          type: string
+          format: uuid
+          example: 4daa9121-a1cb-416c-840a-7d793e12101f
+          description: URI дисциплины = [URI онтологии]#course[UUID]
+        name:
+          type: string
+          example: Философия
+          description: Название дисциплины
+        educationPlan:
+          type: string
+          format: uuid
+          example: 4daa9121-a1cb-416c-840a-7d793e12101f
+          description: id учебного плана
+        topics:
+          $ref: "#/components/schemas/ResultList[Topic]"
+        didacticUnits:
+          $ref: "#/components/schemas/ResultList[DidacticUnit]"
