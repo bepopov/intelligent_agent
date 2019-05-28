@@ -1,5 +1,14 @@
 package ru.kpfu.itis.group11501.popov.intelligent_agent.model;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class TermCount {
 
     private String term;
@@ -7,29 +16,5 @@ public class TermCount {
     private String docId;
 
     private Integer termCount;
-
-    public String getTerm() {
-        return term;
-    }
-
-    public void setTerm(String term) {
-        this.term = term;
-    }
-
-    public String getDocId() {
-        return docId;
-    }
-
-    public void setDocId(String docId) {
-        this.docId = docId;
-    }
-
-    public Integer getTermCount() {
-        return termCount;
-    }
-
-    public void setTermCount(Integer termCount) {
-        this.termCount = termCount;
-    }
 
 }

@@ -159,18 +159,18 @@
 Философия"""^^xsd:string .
 
 
-###  http://www.kpfu.ru/admin/ontologies/2019/courses#Educational_Form
-:Educational_Form rdf:type owl:Class .
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Education_Form
+:Education_Form rdf:type owl:Class .
 
 
-###  http://www.kpfu.ru/admin/ontologies/2019/courses#Educational_Plan
-:Educational_Plan rdf:type owl:Class ;
-                  rdfs:comment "Учебный план" .
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Education_Plan
+:Education_Plan rdf:type owl:Class ;
+                rdfs:comment "Учебный план" .
 
 
-###  http://www.kpfu.ru/admin/ontologies/2019/courses#Educational_Technology
-:Educational_Technology rdf:type owl:Class ;
-                        rdfs:comment "Образовательная технология. Систематический метод планирования, применения процесса обучения и усвоения знания"^^xsd:string .
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Education_Technology
+:Education_Technology rdf:type owl:Class ;
+                      rdfs:comment "Образовательная технология. Систематический метод планирования, применения процесса обучения и усвоения знания"^^xsd:string .
 
 
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Knowledge
@@ -245,9 +245,9 @@
                 :Didactic_Unit_Group
                 :Didactic_Unit_Type
                 :Discipline
-                :Educational_Form
-                :Educational_Plan
-                :Educational_Technology
+                :Education_Form
+                :Education_Plan
+                :Education_Technology
                 :Knowledge
                 :Logistics
                 :Resource

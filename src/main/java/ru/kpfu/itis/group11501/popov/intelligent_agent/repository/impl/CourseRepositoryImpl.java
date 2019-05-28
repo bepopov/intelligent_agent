@@ -12,6 +12,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.criteria.Root;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 @Repository
 public class CourseRepositoryImpl implements CourseRepository {
@@ -36,6 +37,7 @@ public class CourseRepositoryImpl implements CourseRepository {
 
     @Override
     public void add(Course course) {
+        course.setId(UUID.randomUUID().toString());
         entityManager.merge(course);
     }
 

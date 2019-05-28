@@ -8,6 +8,8 @@ public interface TopicService {
 
     void add(Topic topic);
 
+    void add(List<Topic> topics);
+
     List<Topic> getAll();
 
     void delete(Topic topic);
