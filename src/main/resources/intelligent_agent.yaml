@@ -346,6 +346,10 @@ components:
           format: uuid
           example: 4daa9121-a1cb-416c-840a-7d793e12101f
           description: URI дидактической единицы = [URI онтологии]#didactical_unit[UUID]
+        name:
+          type: string
+          example: Бла-бла-бла
+          description: Название дидактической единицы
 
     Competence:
       properties:
@@ -364,11 +368,6 @@ components:
 
     CreateCourse:
       properties:
-        id:
-          type: string
-          format: uuid
-          example: 4daa9121-a1cb-416c-840a-7d793e12101f
-          description: URI дисциплины = [URI онтологии]#course[UUID]
         name:
           type: string
           example: Философия

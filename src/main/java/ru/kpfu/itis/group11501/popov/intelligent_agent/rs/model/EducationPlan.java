@@ -5,38 +5,36 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Competence
+ * EducationPlan
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T12:04:30.405+03:00[Europe/Moscow]")
 
-public class Competence   {
-  @JsonProperty("id")
-  private UUID id;
+public class EducationPlan   {
+  @JsonProperty("name")
+  private String name;
 
-  public Competence id(UUID id) {
-    this.id = id;
+  public EducationPlan name(String name) {
+    this.name = name;
     return this;
   }
 
   /**
-   * URI компетенции = [URI онтологии]#competence[UUID]
-   * @return id
+   * Название учебного плана
+   * @return name
   */
-  @ApiModelProperty(example = "4daa9121-a1cb-416c-840a-7d793e12101f", value = "URI компетенции = [URI онтологии]#competence[UUID]")
+  @ApiModelProperty(example = "(не предусмотрено) очное 2016г.", value = "Название учебного плана")
 
-  @Valid
 
-  public UUID getId() {
-    return id;
+  public String getName() {
+    return name;
   }
 
-  public void setId(UUID id) {
-    this.id = id;
+  public void setName(String name) {
+    this.name = name;
   }
 
 
@@ -48,21 +46,21 @@ public class Competence   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Competence competence = (Competence) o;
-    return Objects.equals(this.id, competence.id);
+    EducationPlan educationPlan = (EducationPlan) o;
+    return Objects.equals(this.name, educationPlan.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id);
+    return Objects.hash(name);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Competence {\n");
+    sb.append("class EducationPlan {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("}");
     return sb.toString();
   }

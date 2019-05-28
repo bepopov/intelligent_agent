@@ -5,7 +5,10 @@
  */
 package ru.kpfu.itis.group11501.popov.intelligent_agent.rs.api;
 
+import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.CreateCourse;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.EducationPlan;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.ResultListCompetence;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.ResultListEducationPlan;
 import java.util.UUID;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
@@ -27,7 +30,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-07T14:49:56.665+03:00[Europe/Moscow]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T12:04:30.405+03:00[Europe/Moscow]")
 
 @Validated
 @Api(value = "institutes", description = "the institutes API")
@@ -37,10 +40,52 @@ public interface InstitutesApi {
         return Optional.empty();
     }
 
+    @ApiOperation(value = "", nickname = "createCourse", notes = "Создать дисциплину", response = CreateCourse.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Дидактические единицы успешно созданы", response = CreateCourse.class) })
+    @RequestMapping(value = "/institutes/{institute_uuid}/education_directions/{direction_uuid}/courses",
+        produces = { "application/json" }, 
+        consumes = { "application/json" },
+        method = RequestMethod.POST)
+    default ResponseEntity<CreateCourse> createCourse(@ApiParam(value = "UUID института",required=true) @PathVariable("institute_uuid") UUID instituteUuid,@ApiParam(value = "UUID направления подготовки",required=true) @PathVariable("direction_uuid") UUID directionUuid,@ApiParam(value = ""  )  @Valid @RequestBody CreateCourse createCourse) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"didacticUnits\" : {    \"items\" : [ {      \"name\" : \"Бла-бла-бла\",      \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"    }, {      \"name\" : \"Бла-бла-бла\",      \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"    } ]  },  \"educationPlan\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\",  \"topics\" : {    \"items\" : [ {      \"name\" : \"Тема 1. Философия в ряду других форм духовного освоения мира человеком\",      \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"    }, {      \"name\" : \"Тема 1. Философия в ряду других форм духовного освоения мира человеком\",      \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"    } ]  },  \"name\" : \"Философия\"}");
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    @ApiOperation(value = "", nickname = "createEducationPlan", notes = "Создать учебный план", response = EducationPlan.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Учебный план успешно создан", response = EducationPlan.class) })
+    @RequestMapping(value = "/institutes/{institute_uuid}/education_directions/{direction_uuid}/education_plans",
+        produces = { "application/json" }, 
+        consumes = { "application/json" },
+        method = RequestMethod.POST)
+    default ResponseEntity<EducationPlan> createEducationPlan(@ApiParam(value = "UUID института",required=true) @PathVariable("institute_uuid") UUID instituteUuid,@ApiParam(value = "UUID направления подготовки",required=true) @PathVariable("direction_uuid") UUID directionUuid,@ApiParam(value = ""  )  @Valid @RequestBody EducationPlan educationPlan) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"name\" : \"(не предусмотрено) очное 2016г.\"}");
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
     @ApiOperation(value = "", nickname = "getAllCompetences", notes = "Получить все компетенции для направления подготовки", response = ResultListCompetence.class, tags={  })
     @ApiResponses(value = { 
         @ApiResponse(code = 200, message = "Компетенции успешно получены", response = ResultListCompetence.class) })
-    @RequestMapping(value = "/institutes/{institute_uuid}/educational_directions/{direction_uuid}/graduate_degrees/{degree_uuid}/competences",
+    @RequestMapping(value = "/institutes/{institute_uuid}/education_directions/{direction_uuid}/graduate_degrees/{degree_uuid}/competences",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
     default ResponseEntity<ResultListCompetence> getAllCompetences(@ApiParam(value = "UUID института",required=true) @PathVariable("institute_uuid") UUID instituteUuid,@ApiParam(value = "UUID направления подготовки",required=true) @PathVariable("direction_uuid") UUID directionUuid,@ApiParam(value = "UUID квалификации выпускника",required=true) @PathVariable("degree_uuid") UUID degreeUuid) {
@@ -48,6 +93,26 @@ public interface InstitutesApi {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
                     ApiUtil.setExampleResponse(request, "application/json", "{  \"items\" : [ {    \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"  }, {    \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"  } ]}");
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    @ApiOperation(value = "", nickname = "getAllEducationPlans", notes = "Получить все учебные планы", response = ResultListEducationPlan.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Учебные планы успешно получены", response = ResultListEducationPlan.class) })
+    @RequestMapping(value = "/institutes/{institute_uuid}/education_directions/{direction_uuid}/education_plans",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    default ResponseEntity<ResultListEducationPlan> getAllEducationPlans(@ApiParam(value = "UUID института",required=true) @PathVariable("institute_uuid") UUID instituteUuid,@ApiParam(value = "UUID направления подготовки",required=true) @PathVariable("direction_uuid") UUID directionUuid) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"items\" : [ {    \"name\" : \"(не предусмотрено) очное 2016г.\"  }, {    \"name\" : \"(не предусмотрено) очное 2016г.\"  } ]}");
                     break;
                 }
             }

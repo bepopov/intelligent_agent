@@ -3,10 +3,52 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+    <script src="https://ajax.aspnetcdn.com/ajax/jQuery/jquery-3.4.0.min.js"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
-<input type="text" name="name"/>
-<input type="submit"/>
+<form action="http://localhost:9000/" id="createEP">
+    <input type="text" name="name"/>
+    <input type="submit"/>
+</form>
+<form action="http://localhost:9000/institutes/4daa9121-a1cb-416c-840a-7d793e12101f/education_directions/4daa9121-a1cb-416c-840a-7d793e12101f/courses" id="createCourse">
+    <input type="text" name="course_name"/>
+    <input type="text" name="educational_plan"/>
+    <input type="text" name="topic1"/>
+    <input type="text" name="du1"/>
+    <input type="text" name="topic2"/>
+    <input type="text" name="du2"/>
+    <input id="submit" type="submit"/>
+</form>
+<script type="text/javascript">
 
+$.ajaxSetup({
+    scriptCharset: "utf-8", //or "ISO-8859-1"
+    crossDomain: true,
+    contentType: "application/json; charset=utf-8"
+});
+
+$('#createCourse').submit(function() {
+ // Stop form from submitting normally
+  event.preventDefault();
+  var $form = $( this );
+  course_name = $form.find( "input[name='course_name']" ).val();
+  educational_plan = $form.find( "input[name='educational_plan']" ).val();
+  topic1 = $form.find( "input[name='topic1']" ).val();
+  topic2 = $form.find( "input[name='topic2']" ).val();
+  du1 = $form.find( "input[name='du1']" ).val();
+  du2 = $form.find( "input[name='du2']" ).val();
+  url = $form.attr( "action" );
+
+  // Send the data using post
+  var posting = $.post( url, {
+    didacticUnits: { items: [{name: du1}, {name: du2}] },
+  	educationPlan: educational_plan,
+  	name: course_name,
+  	topics: { items: [{name: topic1}, {name: topic2}] }
+  } );
+});
+</script>
 </body>
 </html>

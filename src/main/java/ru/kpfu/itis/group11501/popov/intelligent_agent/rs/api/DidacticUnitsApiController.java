@@ -8,12 +8,12 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("${openapi.intelligentAgent.base-path:}")
-public class CoursesApiController implements CoursesApi {
+public class DidacticUnitsApiController implements DidacticUnitsApi {
 
     private final NativeWebRequest request;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public CoursesApiController(NativeWebRequest request) {
+    public DidacticUnitsApiController(NativeWebRequest request) {
         this.request = request;
     }
 
@@ -21,7 +21,5 @@ public class CoursesApiController implements CoursesApi {
     public Optional<NativeWebRequest> getRequest() {
         return Optional.ofNullable(request);
     }
-
-
 
 }

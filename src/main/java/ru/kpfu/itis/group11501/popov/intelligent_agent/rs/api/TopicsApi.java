@@ -5,8 +5,8 @@
  */
 package ru.kpfu.itis.group11501.popov.intelligent_agent.rs.api;
 
-import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.DidacticalUnit;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.ResultListDidacticalUnit;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.DidacticUnit;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.ResultListDidacticUnit;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.ResultListTopic;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.Topic;
 import java.util.UUID;
@@ -30,7 +30,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-07T14:49:56.665+03:00[Europe/Moscow]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T12:04:30.405+03:00[Europe/Moscow]")
 
 @Validated
 @Api(value = "topics", description = "the topics API")
@@ -40,18 +40,18 @@ public interface TopicsApi {
         return Optional.empty();
     }
 
-    @ApiOperation(value = "", nickname = "createDidacticalUnitForTopic", notes = "Создать дидактическую единицу для темы", response = DidacticalUnit.class, tags={  })
+    @ApiOperation(value = "", nickname = "createDidacticalUnitForTopic", notes = "Создать дидактическую единицу для темы", response = DidacticUnit.class, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Дидактическая единица успешно создана", response = DidacticalUnit.class) })
-    @RequestMapping(value = "/topics/{topic_uuid}/didactical_units",
+        @ApiResponse(code = 200, message = "Дидактическая единица успешно создана", response = DidacticUnit.class) })
+    @RequestMapping(value = "/topics/{topic_uuid}/didactic_units",
         produces = { "application/json" }, 
         consumes = { "application/json" },
         method = RequestMethod.POST)
-    default ResponseEntity<DidacticalUnit> createDidacticalUnitForTopic(@ApiParam(value = "UUID темы",required=true) @PathVariable("topic_uuid") UUID topicUuid,@ApiParam(value = ""  )  @Valid @RequestBody DidacticalUnit didacticalUnit) {
+    default ResponseEntity<DidacticUnit> createDidacticalUnitForTopic(@ApiParam(value = "UUID темы",required=true) @PathVariable("topic_uuid") UUID topicUuid,@ApiParam(value = ""  )  @Valid @RequestBody DidacticUnit didacticUnit) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    ApiUtil.setExampleResponse(request, "application/json", "{  \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"}");
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"name\" : \"Бла-бла-бла\",  \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"}");
                     break;
                 }
             }
@@ -82,17 +82,17 @@ public interface TopicsApi {
     }
 
 
-    @ApiOperation(value = "", nickname = "getDidacticalUnits", notes = "Получить все дидактические единицы выбранной темы", response = ResultListDidacticalUnit.class, tags={  })
+    @ApiOperation(value = "", nickname = "getDidacticUnits", notes = "Получить все дидактические единицы выбранной темы", response = ResultListDidacticUnit.class, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Дидактические единицы темы успешно получены", response = ResultListDidacticalUnit.class) })
-    @RequestMapping(value = "/topics/{topic_uuid}/didactical_units",
+        @ApiResponse(code = 200, message = "Дидактические единицы темы успешно получены", response = ResultListDidacticUnit.class) })
+    @RequestMapping(value = "/topics/{topic_uuid}/didactic_units",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<ResultListDidacticalUnit> getDidacticalUnits(@ApiParam(value = "UUID темы",required=true) @PathVariable("topic_uuid") UUID topicUuid) {
+    default ResponseEntity<ResultListDidacticUnit> getDidacticUnits(@ApiParam(value = "UUID темы",required=true) @PathVariable("topic_uuid") UUID topicUuid) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    ApiUtil.setExampleResponse(request, "application/json", "{  \"items\" : [ {    \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"  }, {    \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"  } ]}");
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"items\" : [ {    \"name\" : \"Бла-бла-бла\",    \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"  }, {    \"name\" : \"Бла-бла-бла\",    \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"  } ]}");
                     break;
                 }
             }
