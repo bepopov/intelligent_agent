@@ -15,7 +15,7 @@ import javax.validation.constraints.*;
  * Список курсов
  */
 @ApiModel(description = "Список курсов")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T12:04:30.405+03:00[Europe/Moscow]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T16:59:09.247+03:00[Europe/Moscow]")
 
 public class ResultListCourse   {
   @JsonProperty("items")

@@ -39,4 +39,9 @@ public class TopicServiceImpl implements TopicService {
     public void delete(Topic topic) {
         topicRepository.remove(topic);
     }
+
+    @Override
+    public List<Topic> findNext(String id) {
+        return topicRepository.findNextTopics(id);
+    }
 }

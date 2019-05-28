@@ -1,6 +1,81 @@
 package ru.kpfu.itis.group11501.popov.intelligent_agent.rs.service.impl;
 
+import org.springframework.stereotype.Service;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.*;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.service.TopicsApiService;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.service.DidacticUnitService;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.service.SearchService;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.service.TopicService;
 
+import java.util.List;
+import java.util.UUID;
+import java.util.stream.Collectors;
+
+@Service
 public class TopicsApiServiceImpl implements TopicsApiService {
+
+    private TopicService topicService;
+    private DidacticUnitService didacticUnitService;
+    private SearchService searchService;
+
+    public TopicsApiServiceImpl(TopicService topicService, DidacticUnitService didacticUnitService, SearchService searchService) {
+        this.topicService = topicService;
+        this.didacticUnitService = didacticUnitService;
+        this.searchService = searchService;
+    }
+
+    @Override
+    public DidacticUnit createDidacticUnitForTopic(UUID topicUuid, DidacticUnit didacticUnit) {
+        return null;
+    }
+
+    @Override
+    public Topic createTopic(Topic topic) {
+        return null;
+    }
+
+    @Override
+    public DidacticUnitGroup getDidacticUnits(UUID topicUuid) {
+        List<DidacticUnit> didacticUnits = didacticUnitService.getByTopic(topicUuid.toString())
+                .stream().map(du -> {
+                    DidacticUnit didacticUnit = new DidacticUnit();
+                    didacticUnit.setId(UUID.fromString(du.getId()));
+                    didacticUnit.setName(du.getName());
+                    return didacticUnit;
+                }).collect(Collectors.toList());
+        DidacticUnitGroup group = new DidacticUnitGroup();
+        ResultListDidacticUnit resultList = new ResultListDidacticUnit();
+        resultList.setItems(didacticUnits);
+        group.setDidacticUnits(resultList);
+        return group;
+    }
+
+    @Override
+    public ResultListTopic getNextTopics(UUID topicUuid) {
+        List<Topic> topics = topicService.findNext(topicUuid.toString())
+                .stream().map(t -> {
+                    Topic topic = new Topic();
+                    topic.setName(t.getName());
+                    topic.setId(UUID.fromString(t.getId()));
+                    return topic;
+                }).collect(Collectors.toList());
+        ResultListTopic resultList = new ResultListTopic();
+        resultList.setItems(topics);
+        return null;
+    }
+
+    @Override
+    public ResultListTopic getTopics(String searchText) {
+        List<Topic> topics = searchService
+                .search(searchText, ru.kpfu.itis.group11501.popov.intelligent_agent.model.Topic.class)
+                .stream().map(doc -> {
+                    Topic topic = new Topic();
+                    topic.setId(UUID.fromString(doc.getId()));
+                    topic.setName(doc.getContent());
+                    return topic;
+                }).collect(Collectors.toList());
+        ResultListTopic resultList = new ResultListTopic();
+        resultList.setItems(topics);
+        return resultList;
+    }
 }

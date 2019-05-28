@@ -122,9 +122,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResultList[DidacticUnit]'
+                $ref: '#/components/schemas/DidacticUnitGroup'
     post:
-      operationId: createDidacticalUnitForTopic
+      operationId: createDidacticUnitForTopic
       description: Создать дидактическую единицу для темы
       parameters:
         - name: topic_uuid
@@ -272,7 +272,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResultList[Topic]'
+                $ref: '#/components/schemas/ResultList[DidacticUnit]'
 
 components:
   schemas:
@@ -316,6 +316,14 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/EducationPlan'
+
+    ResultList[DidacticUnitGroup]:
+      description: Список дидактических единиц
+      properties:
+        items:
+          type: array
+          items:
+            $ref: '#/components/schemas/DidacticUnitGroup'
 
     Topic:
       properties:
@@ -361,6 +369,11 @@ components:
 
     EducationPlan:
       properties:
+        id:
+          type: string
+          format: uuid
+          example: 4daa9121-a1cb-416c-840a-7d793e12101f
+          description: URI учебного плана = [URI онтологии]#ep[UUID]
         name:
           type: string
           example: (не предусмотрено) очное 2016г.
@@ -379,5 +392,10 @@ components:
           description: id учебного плана
         topics:
           $ref: "#/components/schemas/ResultList[Topic]"
+        didacticUnits:
+          $ref: "#/components/schemas/ResultList[DidacticUnit]"
+
+    DidacticUnitGroup:
+      properties:
         didacticUnits:
           $ref: "#/components/schemas/ResultList[DidacticUnit]"

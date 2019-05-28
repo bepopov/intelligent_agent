@@ -13,4 +13,6 @@ public interface TopicService {
     List<Topic> getAll();
 
     void delete(Topic topic);
+
+    List<Topic> findNext(String id);
 }

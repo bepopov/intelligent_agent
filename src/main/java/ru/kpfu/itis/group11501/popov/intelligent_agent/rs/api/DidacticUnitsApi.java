@@ -5,7 +5,7 @@
  */
 package ru.kpfu.itis.group11501.popov.intelligent_agent.rs.api;
 
-import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.ResultListTopic;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.ResultListDidacticUnit;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,7 +26,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T12:04:30.405+03:00[Europe/Moscow]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T16:59:09.247+03:00[Europe/Moscow]")
 
 @Validated
 @Api(value = "didactic_units", description = "the didactic_units API")
@@ -36,17 +36,17 @@ public interface DidacticUnitsApi {
         return Optional.empty();
     }
 
-    @ApiOperation(value = "", nickname = "getDidacticUnits", notes = "Получить все дидактические единицы, похожие на введенную. Если текст не введен, вывести все", response = ResultListTopic.class, tags={  })
+    @ApiOperation(value = "", nickname = "getDidacticUnits", notes = "Получить все дидактические единицы, похожие на введенную. Если текст не введен, вывести все", response = ResultListDidacticUnit.class, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Похожие дидактические единицы успешно получены", response = ResultListTopic.class) })
+        @ApiResponse(code = 200, message = "Похожие дидактические единицы успешно получены", response = ResultListDidacticUnit.class) })
     @RequestMapping(value = "/didactic_units",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<ResultListTopic> getDidacticUnits(@ApiParam(value = "Поисковая строка") @Valid @RequestParam(value = "searchText", required = false) String searchText) {
+    default ResponseEntity<ResultListDidacticUnit> getDidacticUnits(@ApiParam(value = "Поисковая строка") @Valid @RequestParam(value = "searchText", required = false) String searchText) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    ApiUtil.setExampleResponse(request, "application/json", "{  \"items\" : [ {    \"name\" : \"Тема 1. Философия в ряду других форм духовного освоения мира человеком\",    \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"  }, {    \"name\" : \"Тема 1. Философия в ряду других форм духовного освоения мира человеком\",    \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"  } ]}");
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"items\" : [ {    \"name\" : \"Бла-бла-бла\",    \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"  }, {    \"name\" : \"Бла-бла-бла\",    \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"  } ]}");
                     break;
                 }
             }

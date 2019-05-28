@@ -37,4 +37,10 @@ public class DidacticalUnitRepositoryImpl implements DidacticUnitRepository {
                         "}";
         return generalRepository.selectSparql(queryString, DidacticUnit.class);
     }
+
+    @Override
+    public List<DidacticUnit> findByTopic(String topicId) {
+        // TODO: Implement the method
+        return null;
+    }
 }

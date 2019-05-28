@@ -5,17 +5,42 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import java.util.UUID;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
  * EducationPlan
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T12:04:30.405+03:00[Europe/Moscow]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T16:59:09.247+03:00[Europe/Moscow]")
 
 public class EducationPlan   {
+  @JsonProperty("id")
+  private UUID id;
+
   @JsonProperty("name")
   private String name;
+
+  public EducationPlan id(UUID id) {
+    this.id = id;
+    return this;
+  }
+
+  /**
+   * URI учебного плана = [URI онтологии]#ep[UUID]
+   * @return id
+  */
+  @ApiModelProperty(example = "4daa9121-a1cb-416c-840a-7d793e12101f", value = "URI учебного плана = [URI онтологии]#ep[UUID]")
+
+  @Valid
+
+  public UUID getId() {
+    return id;
+  }
+
+  public void setId(UUID id) {
+    this.id = id;
+  }
 
   public EducationPlan name(String name) {
     this.name = name;
@@ -47,12 +72,13 @@ public class EducationPlan   {
       return false;
     }
     EducationPlan educationPlan = (EducationPlan) o;
-    return Objects.equals(this.name, educationPlan.name);
+    return Objects.equals(this.id, educationPlan.id) &&
+        Objects.equals(this.name, educationPlan.name);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name);
+    return Objects.hash(id, name);
   }
 
   @Override
@@ -60,6 +86,7 @@ public class EducationPlan   {
     StringBuilder sb = new StringBuilder();
     sb.append("class EducationPlan {\n");
     
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("}");
     return sb.toString();

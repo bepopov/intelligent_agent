@@ -15,4 +15,6 @@ public interface DidacticUnitService {
 
     List<DidacticUnitGroup> getNext(String id);
 
+    List<DidacticUnit> getByTopic(String topicId);
+
 }

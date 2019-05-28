@@ -30,7 +30,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T12:04:30.405+03:00[Europe/Moscow]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T16:59:09.247+03:00[Europe/Moscow]")
 
 @Validated
 @Api(value = "institutes", description = "the institutes API")
@@ -72,7 +72,7 @@ public interface InstitutesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    ApiUtil.setExampleResponse(request, "application/json", "{  \"name\" : \"(не предусмотрено) очное 2016г.\"}");
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"name\" : \"(не предусмотрено) очное 2016г.\",  \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"}");
                     break;
                 }
             }
@@ -112,7 +112,7 @@ public interface InstitutesApi {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    ApiUtil.setExampleResponse(request, "application/json", "{  \"items\" : [ {    \"name\" : \"(не предусмотрено) очное 2016г.\"  }, {    \"name\" : \"(не предусмотрено) очное 2016г.\"  } ]}");
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"items\" : [ {    \"name\" : \"(не предусмотрено) очное 2016г.\",    \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"  }, {    \"name\" : \"(не предусмотрено) очное 2016г.\",    \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"  } ]}");
                     break;
                 }
             }

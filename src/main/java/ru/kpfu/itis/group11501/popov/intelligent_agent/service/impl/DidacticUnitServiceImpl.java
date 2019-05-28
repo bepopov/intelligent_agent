@@ -53,6 +53,11 @@ public class DidacticUnitServiceImpl implements DidacticUnitService {
         return groups;
     }
 
+    @Override
+    public List<DidacticUnit> getByTopic(String topicId) {
+        return didacticUnitRepository.findByTopic(topicId);
+    }
+
     private void createNewDidacticUnit(DidacticUnitGroup didacticUnitGroup) {
         didacticUnitGroup.setId(UUID.randomUUID().toString());
         didacticUnitGroupRepository.add(didacticUnitGroup);

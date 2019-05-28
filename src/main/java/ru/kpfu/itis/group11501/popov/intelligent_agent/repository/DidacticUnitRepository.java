@@ -10,4 +10,5 @@ public interface DidacticUnitRepository {
 
     List<DidacticUnit> findByGroup(String groupId);
 
+    List<DidacticUnit> findByTopic(String topicId);
 }
