@@ -3,7 +3,7 @@ package ru.kpfu.itis.group11501.popov.intelligent_agent.rs.service.impl;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.*;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.service.TopicsApiService;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.service.DidacticUnitService;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.service.TopicDescriptionService;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.SearchService;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.TopicService;
 
@@ -15,17 +15,17 @@ import java.util.stream.Collectors;
 public class TopicsApiServiceImpl implements TopicsApiService {
 
     private TopicService topicService;
-    private DidacticUnitService didacticUnitService;
+    private TopicDescriptionService didacticUnitService;
     private SearchService searchService;
 
-    public TopicsApiServiceImpl(TopicService topicService, DidacticUnitService didacticUnitService, SearchService searchService) {
+    public TopicsApiServiceImpl(TopicService topicService, TopicDescriptionService didacticUnitService, SearchService searchService) {
         this.topicService = topicService;
         this.didacticUnitService = didacticUnitService;
         this.searchService = searchService;
     }
 
     @Override
-    public DidacticUnit createDidacticUnitForTopic(UUID topicUuid, DidacticUnit didacticUnit) {
+    public TopicDescription createDidacticUnitForTopic(UUID topicUuid, TopicDescription didacticUnit) {
         return null;
     }
 
@@ -35,16 +35,16 @@ public class TopicsApiServiceImpl implements TopicsApiService {
     }
 
     @Override
-    public DidacticUnitGroup getDidacticUnits(UUID topicUuid) {
-        List<DidacticUnit> didacticUnits = didacticUnitService.getByTopic(topicUuid.toString())
+    public TopicDescriptionGroup getDidacticUnits(UUID topicUuid) {
+        List<TopicDescription> didacticUnits = didacticUnitService.getByTopic(topicUuid.toString())
                 .stream().map(du -> {
-                    DidacticUnit didacticUnit = new DidacticUnit();
+                    TopicDescription didacticUnit = new TopicDescription();
                     didacticUnit.setId(UUID.fromString(du.getId()));
                     didacticUnit.setName(du.getName());
                     return didacticUnit;
                 }).collect(Collectors.toList());
-        DidacticUnitGroup group = new DidacticUnitGroup();
-        ResultListDidacticUnit resultList = new ResultListDidacticUnit();
+        TopicDescriptionGroup group = new TopicDescriptionGroup();
+        ResultListTopicDescription resultList = new ResultListTopicDescription();
         resultList.setItems(didacticUnits);
         group.setDidacticUnits(resultList);
         return group;

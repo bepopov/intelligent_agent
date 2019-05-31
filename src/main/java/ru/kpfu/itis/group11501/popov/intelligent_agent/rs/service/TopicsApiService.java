@@ -6,11 +6,11 @@ import java.util.UUID;
 
 public interface TopicsApiService {
 
-    DidacticUnit createDidacticUnitForTopic(UUID topicUuid, DidacticUnit didacticUnit);
+    TopicDescription createDidacticUnitForTopic(UUID topicUuid, TopicDescription didacticUnit);
 
     Topic createTopic(Topic topic);
 
-    DidacticUnitGroup getDidacticUnits(UUID topicUuid);
+    TopicDescriptionGroup getDidacticUnits(UUID topicUuid);
 
     ResultListTopic getNextTopics(UUID topicUuid);
 

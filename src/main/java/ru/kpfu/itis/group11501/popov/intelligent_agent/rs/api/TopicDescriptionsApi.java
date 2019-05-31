@@ -5,7 +5,7 @@
  */
 package ru.kpfu.itis.group11501.popov.intelligent_agent.rs.api;
 
-import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.ResultListDidacticUnit;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.ResultListTopicDescription;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -26,23 +26,23 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T16:59:09.247+03:00[Europe/Moscow]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-30T10:32:20.922+03:00[Europe/Moscow]")
 
 @Validated
-@Api(value = "didactic_units", description = "the didactic_units API")
-public interface DidacticUnitsApi {
+@Api(value = "topic_descriptions", description = "the topic_descriptions API")
+public interface TopicDescriptionsApi {
 
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
 
-    @ApiOperation(value = "", nickname = "getDidacticUnits", notes = "Получить все дидактические единицы, похожие на введенную. Если текст не введен, вывести все", response = ResultListDidacticUnit.class, tags={  })
+    @ApiOperation(value = "", nickname = "getTopicDescriptions", notes = "Получить все описания темы, похожие на введенную. Если текст не введен, вывести все", response = ResultListTopicDescription.class, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Похожие дидактические единицы успешно получены", response = ResultListDidacticUnit.class) })
-    @RequestMapping(value = "/didactic_units",
+        @ApiResponse(code = 200, message = "Похожие описания тем успешно получены", response = ResultListTopicDescription.class) })
+    @RequestMapping(value = "/topic_descriptions",
         produces = { "application/json" }, 
         method = RequestMethod.GET)
-    default ResponseEntity<ResultListDidacticUnit> getDidacticUnits(@ApiParam(value = "Поисковая строка") @Valid @RequestParam(value = "searchText", required = false) String searchText) {
+    default ResponseEntity<ResultListTopicDescription> getTopicDescriptions(@ApiParam(value = "Поисковая строка") @Valid @RequestParam(value = "searchText", required = false) String searchText) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {

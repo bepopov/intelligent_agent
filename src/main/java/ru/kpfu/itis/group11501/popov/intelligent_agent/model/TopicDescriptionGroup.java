@@ -11,17 +11,17 @@ import org.aksw.jena_sparql_api.mapper.annotation.RdfType;
 import java.util.List;
 
 @RdfType("course:Didactic_Unit_Group")
-@DefaultIri("course:dugroup#{id}")
+@DefaultIri("course:tdgroup#{id}")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DidacticUnitGroup {
+public class TopicDescriptionGroup {
 
     @Iri("rdfs:label")
     private String id;
 
     @Iri("course:groupOf")
-    private List<DidacticUnit> didacticUnits;
+    private List<TopicDescription> didacticUnits;
 
 }

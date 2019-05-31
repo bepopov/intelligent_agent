@@ -52,7 +52,7 @@
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#hasDidacticUnitGroup
 :hasDidacticUnitGroup rdf:type owl:ObjectProperty ;
                       rdfs:domain :Topic ;
-                      rdfs:range :Didactic_Unit_Group ;
+                      rdfs:range :Topic_Description_Group ;
                       rdfs:comment "Тема содержит группу дидактических единиц"^^xsd:string .
 
 
@@ -133,25 +133,6 @@
 Контрольная работа, лабораторная работа, тест, эссе и т.п."""^^xsd:string .
 
 
-###  http://www.kpfu.ru/admin/ontologies/2019/courses#Didactic_Unit
-:Didactic_Unit rdf:type owl:Class ;
-               rdfs:comment """Дидактическая единица - конкретная теорема, аксиома, правило и т.п. 
-Пример:
-Мировоззрение как духовный способ освоения человеком наиболее общих взглядов на мир и место в нем."""^^xsd:string .
-
-
-###  http://www.kpfu.ru/admin/ontologies/2019/courses#Didactic_Unit_Group
-:Didactic_Unit_Group rdf:type owl:Class ;
-                     rdfs:comment "Группа из дидактических единиц. Используется для обозначения коллекции дидактических единиц, прикрепленных к определенной теме. Суть в том, что дидактические единицы имеют иерархические связи, а также связи вида пререквизит, но при заполнении РПД пользователь их не указывает. С группой из дидактических единиц связаны термины."^^xsd:string .
-
-
-###  http://www.kpfu.ru/admin/ontologies/2019/courses#Didactic_Unit_Type
-:Didactic_Unit_Type rdf:type owl:Class ;
-                    rdfs:comment """Тип дидактической единицы.
-Пример:
-Теорема, аксиома, правило и т.п."""^^xsd:string .
-
-
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Discipline
 :Discipline rdf:type owl:Class ;
             rdfs:comment """Дисциплина.
@@ -226,6 +207,18 @@
 Философия в ряду других форм духовного освоения мира человеком."""^^xsd:string .
 
 
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Topic_Description
+:Topic_Description rdf:type owl:Class ;
+                   rdfs:comment """Описание темы
+Пример:
+Мировоззрение как духовный способ освоения человеком наиболее общих взглядов на мир и место в нем."""^^xsd:string .
+
+
+###  http://www.kpfu.ru/admin/ontologies/2019/courses#Topic_Description_Group
+:Topic_Description_Group rdf:type owl:Class ;
+                         rdfs:comment "Группа из описания. Используется для обозначения коллекции описаний, прикрепленных к определенной теме. ."^^xsd:string .
+
+
 ###  http://www.kpfu.ru/admin/ontologies/2019/courses#Training_Cycle
 :Training_Cycle rdf:type owl:Class ;
                 rdfs:comment "Учебный цикл. Совокупность дисциплин (модулей) основной образовательной программы (естественнонаучный, профессиональный, гуманитарный и т.п.)"^^xsd:string .
@@ -241,9 +234,6 @@
                 :Competence
                 :Control_Form
                 :Control_Form_Type
-                :Didactic_Unit
-                :Didactic_Unit_Group
-                :Didactic_Unit_Type
                 :Discipline
                 :Education_Form
                 :Education_Plan
@@ -258,6 +248,8 @@
                 :Syllabus
                 :Term
                 :Topic
+                :Topic_Description
+                :Topic_Description_Group
                 :Training_Cycle
               )
 ] .

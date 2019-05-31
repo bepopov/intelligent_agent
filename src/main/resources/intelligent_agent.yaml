@@ -104,10 +104,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/Topic'
 
-  /topics/{topic_uuid}/didactic_units:
+  /topics/{topic_uuid}/topic_descriptions:
     get:
-      operationId: getDidacticUnits
-      description: Получить все дидактические единицы выбранной темы
+      operationId: getTopicDescriptions
+      description: Получить все описания выбранной темы
       parameters:
         - name: topic_uuid
           in: path
@@ -118,14 +118,14 @@ paths:
             example: 4daa9121-a1cb-416c-840a-7d793e12101f
       responses:
         200:
-          description: Дидактические единицы темы успешно получены
+          description: Описания темы успешно получены
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DidacticUnitGroup'
+                $ref: '#/components/schemas/TopicDescriptionGroup'
     post:
-      operationId: createDidacticUnitForTopic
-      description: Создать дидактическую единицу для темы
+      operationId: createTopicDescriptionForTopic
+      description: Создать описание для темы
       parameters:
         - name: topic_uuid
           in: path
@@ -138,14 +138,14 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/DidacticUnit'
+              $ref: '#/components/schemas/TopicDescription'
       responses:
         200:
-          description: Дидактическая единица успешно создана
+          description: Описание темы успешно создана
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DidacticUnit'
+                $ref: '#/components/schemas/TopicDescription'
 
   /institutes/{institute_uuid}/education_directions/{direction_uuid}/graduate_degrees/{degree_uuid}/competences:
     get:
@@ -208,7 +208,7 @@ paths:
               $ref: '#/components/schemas/CreateCourse'
       responses:
         200:
-          description: Дидактические единицы успешно созданы
+          description: Курс успешно создан
           content:
             application/json:
               schema:
@@ -256,10 +256,10 @@ paths:
               schema:
                 $ref: '#/components/schemas/EducationPlan'
 
-  /didactic_units:
+  /topic_descriptions:
     get:
-      operationId: getDidacticUnits
-      description: Получить все дидактические единицы, похожие на введенную. Если текст не введен, вывести все
+      operationId: getTopicDescriptions
+      description: Получить все описания темы, похожие на введенную. Если текст не введен, вывести все
       parameters:
         - name: searchText
           in: query
@@ -268,11 +268,11 @@ paths:
             type: string
       responses:
         200:
-          description: Похожие дидактические единицы успешно получены
+          description: Похожие описания тем успешно получены
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ResultList[DidacticUnit]'
+                $ref: '#/components/schemas/ResultList[TopicDescription]'
 
 components:
   schemas:
@@ -293,13 +293,13 @@ components:
           items:
             $ref: '#/components/schemas/Course'
 
-    ResultList[DidacticUnit]:
-      description: Список дидактических единиц
+    ResultList[TopicDescription]:
+      description: Список описаний тем
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/DidacticUnit'
+            $ref: '#/components/schemas/TopicDescription'
 
     ResultList[Competence]:
       description: Список компетенций
@@ -317,13 +317,13 @@ components:
           items:
             $ref: '#/components/schemas/EducationPlan'
 
-    ResultList[DidacticUnitGroup]:
-      description: Список дидактических единиц
+    ResultList[TopicDescriptionGroup]:
+      description: Список групп описаний тем
       properties:
         items:
           type: array
           items:
-            $ref: '#/components/schemas/DidacticUnitGroup'
+            $ref: '#/components/schemas/TopicDescriptionGroup'
 
     Topic:
       properties:
@@ -347,17 +347,17 @@ components:
           type: string
           example: Философия
 
-    DidacticUnit:
+    TopicDescription:
       properties:
         id:
           type: string
           format: uuid
           example: 4daa9121-a1cb-416c-840a-7d793e12101f
-          description: URI дидактической единицы = [URI онтологии]#didactical_unit[UUID]
+          description: URI описания темы = [URI онтологии]#td[UUID]
         name:
           type: string
           example: Бла-бла-бла
-          description: Название дидактической единицы
+          description: Описание темы
 
     Competence:
       properties:
@@ -392,10 +392,10 @@ components:
           description: id учебного плана
         topics:
           $ref: "#/components/schemas/ResultList[Topic]"
-        didacticUnits:
-          $ref: "#/components/schemas/ResultList[DidacticUnit]"
+        topicDescriptions:
+          $ref: "#/components/schemas/ResultList[TopicDescription]"
 
-    DidacticUnitGroup:
+    TopicDescriptionGroup:
       properties:
-        didacticUnits:
-          $ref: "#/components/schemas/ResultList[DidacticUnit]"
+        topicDescriptions:
+          $ref: "#/components/schemas/ResultList[TopicDescription]"

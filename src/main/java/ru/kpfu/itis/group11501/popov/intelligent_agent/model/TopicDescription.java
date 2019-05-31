@@ -9,12 +9,12 @@ import org.aksw.jena_sparql_api.mapper.annotation.Iri;
 import org.aksw.jena_sparql_api.mapper.annotation.RdfType;
 
 @RdfType("course:Didactic_Unit")
-@DefaultIri("course:du#{id}")
+@DefaultIri("course:td#{id}")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class DidacticUnit {
+public class TopicDescription {
 
     @Iri("rdfs:label")
     private String id;

@@ -6,15 +6,15 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.UUID;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.ResultListDidacticUnit;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.ResultListTopic;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.ResultListTopicDescription;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
  * CreateCourse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T16:59:09.247+03:00[Europe/Moscow]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-30T10:32:20.922+03:00[Europe/Moscow]")
 
 public class CreateCourse   {
   @JsonProperty("name")
@@ -26,8 +26,8 @@ public class CreateCourse   {
   @JsonProperty("topics")
   private ResultListTopic topics = null;
 
-  @JsonProperty("didacticUnits")
-  private ResultListDidacticUnit didacticUnits = null;
+  @JsonProperty("topicDescriptions")
+  private ResultListTopicDescription topicDescriptions = null;
 
   public CreateCourse name(String name) {
     this.name = name;
@@ -91,25 +91,25 @@ public class CreateCourse   {
     this.topics = topics;
   }
 
-  public CreateCourse didacticUnits(ResultListDidacticUnit didacticUnits) {
-    this.didacticUnits = didacticUnits;
+  public CreateCourse topicDescriptions(ResultListTopicDescription topicDescriptions) {
+    this.topicDescriptions = topicDescriptions;
     return this;
   }
 
   /**
-   * Get didacticUnits
-   * @return didacticUnits
+   * Get topicDescriptions
+   * @return topicDescriptions
   */
   @ApiModelProperty(value = "")
 
   @Valid
 
-  public ResultListDidacticUnit getDidacticUnits() {
-    return didacticUnits;
+  public ResultListTopicDescription getTopicDescriptions() {
+    return topicDescriptions;
   }
 
-  public void setDidacticUnits(ResultListDidacticUnit didacticUnits) {
-    this.didacticUnits = didacticUnits;
+  public void setTopicDescriptions(ResultListTopicDescription topicDescriptions) {
+    this.topicDescriptions = topicDescriptions;
   }
 
 
@@ -125,12 +125,12 @@ public class CreateCourse   {
     return Objects.equals(this.name, createCourse.name) &&
         Objects.equals(this.educationPlan, createCourse.educationPlan) &&
         Objects.equals(this.topics, createCourse.topics) &&
-        Objects.equals(this.didacticUnits, createCourse.didacticUnits);
+        Objects.equals(this.topicDescriptions, createCourse.topicDescriptions);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, educationPlan, topics, didacticUnits);
+    return Objects.hash(name, educationPlan, topics, topicDescriptions);
   }
 
   @Override
@@ -141,7 +141,7 @@ public class CreateCourse   {
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    educationPlan: ").append(toIndentedString(educationPlan)).append("\n");
     sb.append("    topics: ").append(toIndentedString(topics)).append("\n");
-    sb.append("    didacticUnits: ").append(toIndentedString(didacticUnits)).append("\n");
+    sb.append("    topicDescriptions: ").append(toIndentedString(topicDescriptions)).append("\n");
     sb.append("}");
     return sb.toString();
   }

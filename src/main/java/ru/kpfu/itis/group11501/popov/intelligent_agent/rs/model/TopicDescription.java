@@ -10,27 +10,27 @@ import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * DidacticUnit
+ * TopicDescription
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T16:59:09.247+03:00[Europe/Moscow]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-30T10:32:20.922+03:00[Europe/Moscow]")
 
-public class DidacticUnit   {
+public class TopicDescription   {
   @JsonProperty("id")
   private UUID id;
 
   @JsonProperty("name")
   private String name;
 
-  public DidacticUnit id(UUID id) {
+  public TopicDescription id(UUID id) {
     this.id = id;
     return this;
   }
 
   /**
-   * URI дидактической единицы = [URI онтологии]#didactical_unit[UUID]
+   * URI описания темы = [URI онтологии]#td[UUID]
    * @return id
   */
-  @ApiModelProperty(example = "4daa9121-a1cb-416c-840a-7d793e12101f", value = "URI дидактической единицы = [URI онтологии]#didactical_unit[UUID]")
+  @ApiModelProperty(example = "4daa9121-a1cb-416c-840a-7d793e12101f", value = "URI описания темы = [URI онтологии]#td[UUID]")
 
   @Valid
 
@@ -42,16 +42,16 @@ public class DidacticUnit   {
     this.id = id;
   }
 
-  public DidacticUnit name(String name) {
+  public TopicDescription name(String name) {
     this.name = name;
     return this;
   }
 
   /**
-   * Название дидактической единицы
+   * Описание темы
    * @return name
   */
-  @ApiModelProperty(example = "Бла-бла-бла", value = "Название дидактической единицы")
+  @ApiModelProperty(example = "Бла-бла-бла", value = "Описание темы")
 
 
   public String getName() {
@@ -71,9 +71,9 @@ public class DidacticUnit   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DidacticUnit didacticUnit = (DidacticUnit) o;
-    return Objects.equals(this.id, didacticUnit.id) &&
-        Objects.equals(this.name, didacticUnit.name);
+    TopicDescription topicDescription = (TopicDescription) o;
+    return Objects.equals(this.id, topicDescription.id) &&
+        Objects.equals(this.name, topicDescription.name);
   }
 
   @Override
@@ -84,7 +84,7 @@ public class DidacticUnit   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DidacticUnit {\n");
+    sb.append("class TopicDescription {\n");
     
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");

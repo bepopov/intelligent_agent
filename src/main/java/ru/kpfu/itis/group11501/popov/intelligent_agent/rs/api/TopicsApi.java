@@ -5,10 +5,10 @@
  */
 package ru.kpfu.itis.group11501.popov.intelligent_agent.rs.api;
 
-import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.DidacticUnit;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.DidacticUnitGroup;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.ResultListTopic;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.Topic;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.TopicDescription;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.TopicDescriptionGroup;
 import java.util.UUID;
 import io.swagger.annotations.*;
 import org.springframework.http.HttpStatus;
@@ -30,7 +30,7 @@ import javax.validation.constraints.*;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T16:59:09.247+03:00[Europe/Moscow]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-30T10:32:20.922+03:00[Europe/Moscow]")
 
 @Validated
 @Api(value = "topics", description = "the topics API")
@@ -39,27 +39,6 @@ public interface TopicsApi {
     default Optional<NativeWebRequest> getRequest() {
         return Optional.empty();
     }
-
-    @ApiOperation(value = "", nickname = "createDidacticUnitForTopic", notes = "Создать дидактическую единицу для темы", response = DidacticUnit.class, tags={  })
-    @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Дидактическая единица успешно создана", response = DidacticUnit.class) })
-    @RequestMapping(value = "/topics/{topic_uuid}/didactic_units",
-        produces = { "application/json" }, 
-        consumes = { "application/json" },
-        method = RequestMethod.POST)
-    default ResponseEntity<DidacticUnit> createDidacticUnitForTopic(@ApiParam(value = "UUID темы",required=true) @PathVariable("topic_uuid") UUID topicUuid,@ApiParam(value = ""  )  @Valid @RequestBody DidacticUnit didacticUnit) {
-        getRequest().ifPresent(request -> {
-            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
-                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    ApiUtil.setExampleResponse(request, "application/json", "{  \"name\" : \"Бла-бла-бла\",  \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"}");
-                    break;
-                }
-            }
-        });
-        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
-
-    }
-
 
     @ApiOperation(value = "", nickname = "createTopic", notes = "Создать тему", response = Topic.class, tags={  })
     @ApiResponses(value = { 
@@ -82,17 +61,18 @@ public interface TopicsApi {
     }
 
 
-    @ApiOperation(value = "", nickname = "getDidacticUnits", notes = "Получить все дидактические единицы выбранной темы", response = DidacticUnitGroup.class, tags={  })
+    @ApiOperation(value = "", nickname = "createTopicDescriptionForTopic", notes = "Создать описание для темы", response = TopicDescription.class, tags={  })
     @ApiResponses(value = { 
-        @ApiResponse(code = 200, message = "Дидактические единицы темы успешно получены", response = DidacticUnitGroup.class) })
-    @RequestMapping(value = "/topics/{topic_uuid}/didactic_units",
+        @ApiResponse(code = 200, message = "Описание темы успешно создана", response = TopicDescription.class) })
+    @RequestMapping(value = "/topics/{topic_uuid}/topic_descriptions",
         produces = { "application/json" }, 
-        method = RequestMethod.GET)
-    default ResponseEntity<DidacticUnitGroup> getDidacticUnits(@ApiParam(value = "UUID темы",required=true) @PathVariable("topic_uuid") UUID topicUuid) {
+        consumes = { "application/json" },
+        method = RequestMethod.POST)
+    default ResponseEntity<TopicDescription> createTopicDescriptionForTopic(@ApiParam(value = "UUID темы",required=true) @PathVariable("topic_uuid") UUID topicUuid,@ApiParam(value = ""  )  @Valid @RequestBody TopicDescription topicDescription) {
         getRequest().ifPresent(request -> {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
-                    ApiUtil.setExampleResponse(request, "application/json", "{  \"didacticUnits\" : {    \"items\" : [ {      \"name\" : \"Бла-бла-бла\",      \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"    }, {      \"name\" : \"Бла-бла-бла\",      \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"    } ]  }}");
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"name\" : \"Бла-бла-бла\",  \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"}");
                     break;
                 }
             }
@@ -113,6 +93,26 @@ public interface TopicsApi {
             for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
                 if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
                     ApiUtil.setExampleResponse(request, "application/json", "{  \"items\" : [ {    \"name\" : \"Тема 1. Философия в ряду других форм духовного освоения мира человеком\",    \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"  }, {    \"name\" : \"Тема 1. Философия в ряду других форм духовного освоения мира человеком\",    \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"  } ]}");
+                    break;
+                }
+            }
+        });
+        return new ResponseEntity<>(HttpStatus.NOT_IMPLEMENTED);
+
+    }
+
+
+    @ApiOperation(value = "", nickname = "getTopicDescriptions", notes = "Получить все описания выбранной темы", response = TopicDescriptionGroup.class, tags={  })
+    @ApiResponses(value = { 
+        @ApiResponse(code = 200, message = "Описания темы успешно получены", response = TopicDescriptionGroup.class) })
+    @RequestMapping(value = "/topics/{topic_uuid}/topic_descriptions",
+        produces = { "application/json" }, 
+        method = RequestMethod.GET)
+    default ResponseEntity<TopicDescriptionGroup> getTopicDescriptions(@ApiParam(value = "UUID темы",required=true) @PathVariable("topic_uuid") UUID topicUuid) {
+        getRequest().ifPresent(request -> {
+            for (MediaType mediaType: MediaType.parseMediaTypes(request.getHeader("Accept"))) {
+                if (mediaType.isCompatibleWith(MediaType.valueOf("application/json"))) {
+                    ApiUtil.setExampleResponse(request, "application/json", "{  \"topicDescriptions\" : {    \"items\" : [ {      \"name\" : \"Бла-бла-бла\",      \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"    }, {      \"name\" : \"Бла-бла-бла\",      \"id\" : \"4daa9121-a1cb-416c-840a-7d793e12101f\"    } ]  }}");
                     break;
                 }
             }

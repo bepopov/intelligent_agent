@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.*;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.repository.OWLListRepository;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.service.DidacticUnitService;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.service.TopicDescriptionService;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.SearchService;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.service.TopicService;
 
@@ -19,9 +19,9 @@ public class TopicController {
     private TopicService topicService;
     private SearchService searchService;
     private OWLListRepository owlListRepository;
-    private DidacticUnitService didacticUnitService;
+    private TopicDescriptionService didacticUnitService;
 
-    public TopicController(TopicService topicService, SearchService searchService, OWLListRepository owlListRepository, DidacticUnitService didacticUnitService) {
+    public TopicController(TopicService topicService, SearchService searchService, OWLListRepository owlListRepository, TopicDescriptionService didacticUnitService) {
         this.topicService = topicService;
         this.searchService = searchService;
         this.owlListRepository = owlListRepository;
@@ -75,7 +75,7 @@ public class TopicController {
     @RequestMapping("/add/du")
     @ResponseBody
     public String addDU() {
-        DidacticUnitGroup duGroup = new DidacticUnitGroup();
+        TopicDescriptionGroup duGroup = new TopicDescriptionGroup();
         String [] strings = new String[] {
                 "Мировоззрение как духовный способ освоения человеком наиболее общих взглядов на мир и место в нем",
                 "Мифология, религия, научные основания и общие результаты познания, художественно-эстетические освоения природной и социальной среды.",
@@ -84,9 +84,9 @@ public class TopicController {
                 "Понятие \"картина мира\". ",
                 "Религиозные, научные, философские картины мира."
         };
-        List<DidacticUnit> didacticUnits = new ArrayList<>();
+        List<TopicDescription> didacticUnits = new ArrayList<>();
         for (String string : strings) {
-            DidacticUnit du = new DidacticUnit();
+            TopicDescription du = new TopicDescription();
             du.setId(UUID.randomUUID().toString());
             du.setName(string);
             didacticUnits.add(du);
@@ -100,7 +100,7 @@ public class TopicController {
     @ResponseBody
     public List<Document> du() {
         String text = "Мировоззрение как духовная религия. Религиозный человек";
-        List<Document> documents = searchService.searchGrouped(text, DidacticUnit.class, DidacticUnitGroup.class);
+        List<Document> documents = searchService.searchGrouped(text, TopicDescription.class, TopicDescriptionGroup.class);
         return documents;
     }
 

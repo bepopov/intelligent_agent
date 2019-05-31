@@ -3,8 +3,8 @@ package ru.kpfu.itis.group11501.popov.intelligent_agent.rs.service.impl;
 import org.springframework.scheduling.TaskScheduler;
 import org.springframework.stereotype.Service;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Course;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.model.DidacticUnit;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.model.DidacticUnitGroup;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.model.TopicDescription;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.model.TopicDescriptionGroup;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.model.Topic;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.CreateCourse;
 import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.EducationPlan;
@@ -43,11 +43,11 @@ public class InstitutesApiServiceImpl implements InstitutesApiService {
                         topic.setName(t.getName());
                         return topic;
                     }).collect(Collectors.toList());
-            List<DidacticUnitGroup> didacticUnits = createCourse.getDidacticUnits().getItems().stream()
+            List<TopicDescriptionGroup> didacticUnits = createCourse.getDidacticUnits().getItems().stream()
                     .map(du -> {
-                        DidacticUnitGroup group = new DidacticUnitGroup();
-                        List<DidacticUnit> didacticUnitList = new ArrayList<>();
-                        DidacticUnit didacticUnit = new DidacticUnit();
+                        TopicDescriptionGroup group = new TopicDescriptionGroup();
+                        List<TopicDescription> didacticUnitList = new ArrayList<>();
+                        TopicDescription didacticUnit = new TopicDescription();
                         didacticUnit.setName(du.getName());
                         didacticUnitList.add(didacticUnit);
                         group.setDidacticUnits(didacticUnitList);

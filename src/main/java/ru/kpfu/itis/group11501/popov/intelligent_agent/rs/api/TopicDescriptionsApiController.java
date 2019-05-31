@@ -8,12 +8,12 @@ import java.util.Optional;
 
 @Controller
 @RequestMapping("${openapi.intelligentAgent.base-path:}")
-public class CoursesApiController implements CoursesApi {
+public class TopicDescriptionsApiController implements TopicDescriptionsApi {
 
     private final NativeWebRequest request;
 
     @org.springframework.beans.factory.annotation.Autowired
-    public CoursesApiController(NativeWebRequest request) {
+    public TopicDescriptionsApiController(NativeWebRequest request) {
         this.request = request;
     }
 

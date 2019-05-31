@@ -9,7 +9,7 @@ public interface CourseService {
     void add(Course course,
              String educationPlan,
              List<Topic> topics,
-             List<DidacticUnitGroup> didacticUnits);
+             List<TopicDescriptionGroup> didacticUnits);
 
     List<Course> getAll(String searchText);
 

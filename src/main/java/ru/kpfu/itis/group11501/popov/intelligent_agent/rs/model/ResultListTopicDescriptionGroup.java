@@ -7,27 +7,27 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.util.ArrayList;
 import java.util.List;
-import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.DidacticUnit;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.TopicDescriptionGroup;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Список дидактических единиц
+ * Список групп описаний тем
  */
-@ApiModel(description = "Список дидактических единиц")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-28T16:59:09.247+03:00[Europe/Moscow]")
+@ApiModel(description = "Список групп описаний тем")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-30T10:32:20.922+03:00[Europe/Moscow]")
 
-public class ResultListDidacticUnit   {
+public class ResultListTopicDescriptionGroup   {
   @JsonProperty("items")
   @Valid
-  private List<DidacticUnit> items = null;
+  private List<TopicDescriptionGroup> items = null;
 
-  public ResultListDidacticUnit items(List<DidacticUnit> items) {
+  public ResultListTopicDescriptionGroup items(List<TopicDescriptionGroup> items) {
     this.items = items;
     return this;
   }
 
-  public ResultListDidacticUnit addItemsItem(DidacticUnit itemsItem) {
+  public ResultListTopicDescriptionGroup addItemsItem(TopicDescriptionGroup itemsItem) {
     if (this.items == null) {
       this.items = new ArrayList<>();
     }
@@ -43,11 +43,11 @@ public class ResultListDidacticUnit   {
 
   @Valid
 
-  public List<DidacticUnit> getItems() {
+  public List<TopicDescriptionGroup> getItems() {
     return items;
   }
 
-  public void setItems(List<DidacticUnit> items) {
+  public void setItems(List<TopicDescriptionGroup> items) {
     this.items = items;
   }
 
@@ -60,8 +60,8 @@ public class ResultListDidacticUnit   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ResultListDidacticUnit resultListDidacticUnit = (ResultListDidacticUnit) o;
-    return Objects.equals(this.items, resultListDidacticUnit.items);
+    ResultListTopicDescriptionGroup resultListTopicDescriptionGroup = (ResultListTopicDescriptionGroup) o;
+    return Objects.equals(this.items, resultListTopicDescriptionGroup.items);
   }
 
   @Override
@@ -72,7 +72,7 @@ public class ResultListDidacticUnit   {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ResultListDidacticUnit {\n");
+    sb.append("class ResultListTopicDescriptionGroup {\n");
     
     sb.append("    items: ").append(toIndentedString(items)).append("\n");
     sb.append("}");

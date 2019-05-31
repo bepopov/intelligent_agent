@@ -5,38 +5,38 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import java.util.UUID;
+import ru.kpfu.itis.group11501.popov.intelligent_agent.rs.model.ResultListTopicDescription;
 import javax.validation.Valid;
 import javax.validation.constraints.*;
 
 /**
- * Competence
+ * TopicDescriptionGroup
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.SpringCodegen", date = "2019-05-30T10:32:20.922+03:00[Europe/Moscow]")
 
-public class Competence   {
-  @JsonProperty("id")
-  private UUID id;
+public class TopicDescriptionGroup   {
+  @JsonProperty("topicDescriptions")
+  private ResultListTopicDescription topicDescriptions = null;
 
-  public Competence id(UUID id) {
-    this.id = id;
+  public TopicDescriptionGroup topicDescriptions(ResultListTopicDescription topicDescriptions) {
+    this.topicDescriptions = topicDescriptions;
     return this;
   }
 
   /**
-   * URI компетенции = [URI онтологии]#competence[UUID]
-   * @return id
+   * Get topicDescriptions
+   * @return topicDescriptions
   */
-  @ApiModelProperty(example = "4daa9121-a1cb-416c-840a-7d793e12101f", value = "URI компетенции = [URI онтологии]#competence[UUID]")
+  @ApiModelProperty(value = "")
 
   @Valid
 
-  public UUID getId() {
-    return id;
+  public ResultListTopicDescription getTopicDescriptions() {
+    return topicDescriptions;
   }
 
-  public void setId(UUID id) {
-    this.id = id;
+  public void setTopicDescriptions(ResultListTopicDescription topicDescriptions) {
+    this.topicDescriptions = topicDescriptions;
   }
 
 
@@ -48,21 +48,21 @@ public class Competence   {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Competence competence = (Competence) o;
-    return Objects.equals(this.id, competence.id);
+    TopicDescriptionGroup topicDescriptionGroup = (TopicDescriptionGroup) o;
+    return Objects.equals(this.topicDescriptions, topicDescriptionGroup.topicDescriptions);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id);
+    return Objects.hash(topicDescriptions);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Competence {\n");
+    sb.append("class TopicDescriptionGroup {\n");
     
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    topicDescriptions: ").append(toIndentedString(topicDescriptions)).append("\n");
     sb.append("}");
     return sb.toString();
   }
