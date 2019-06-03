@@ -46,7 +46,7 @@ public class TopicsApiServiceImpl implements TopicsApiService {
         TopicDescriptionGroup group = new TopicDescriptionGroup();
         ResultListTopicDescription resultList = new ResultListTopicDescription();
         resultList.setItems(didacticUnits);
-        group.setDidacticUnits(resultList);
+        group.setTopicDescriptions(resultList);
         return group;
     }
 

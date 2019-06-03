@@ -43,7 +43,7 @@ public class InstitutesApiServiceImpl implements InstitutesApiService {
                         topic.setName(t.getName());
                         return topic;
                     }).collect(Collectors.toList());
-            List<TopicDescriptionGroup> didacticUnits = createCourse.getDidacticUnits().getItems().stream()
+            List<TopicDescriptionGroup> didacticUnits = createCourse.getTopicDescriptions().getItems().stream()
                     .map(du -> {
                         TopicDescriptionGroup group = new TopicDescriptionGroup();
                         List<TopicDescription> didacticUnitList = new ArrayList<>();
